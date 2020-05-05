@@ -1,6 +1,11 @@
 {
   "extends": "tslint:recommended",
   "rules": {
+    "indent": [
+      true,
+      "spaces",
+      4
+    ],
     "array-type": false,
     "arrow-parens": false,
     "deprecation": {
@@ -18,7 +23,7 @@
     "component-selector": [
       true,
       "element",
-      "app",
+      ["app", "weewx"],
       "kebab-case"
     ],
     "import-blacklist": [
@@ -66,7 +71,6 @@
       "as-needed"
     ],
     "object-literal-sort-keys": false,
-    "ordered-imports": false,
     "quotemark": [
       true,
       "single"
@@ -83,7 +87,8 @@
     "template-banana-in-box": true,
     "template-no-negated-async": true,
     "use-lifecycle-interface": true,
-    "use-pipe-transform-interface": true
+    "use-pipe-transform-interface": true,
+    "ordered-imports": true
   },
   "rulesDirectory": [
     "codelyzer"
