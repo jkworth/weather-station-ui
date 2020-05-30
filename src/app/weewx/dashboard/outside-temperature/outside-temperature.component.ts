@@ -91,6 +91,16 @@ export class OutsideTemperatureComponent implements AfterViewInit, OnDestroy {
             this.hand.radius = am4core.percent(85);
             this.hand.startWidth = 10;
             this.hand.value = Number.MIN_VALUE;
+
+            // const line = this.chart.createChild(am4core.Line);
+            // line.isMeasured = false;
+            // line.stroke = am4core.color('#ddd');
+            // line.strokeWidth = 4;
+            // const width = this.chart.contentWidth;
+            // line.x1 = (width / 2) - 100 + 20;
+            // line.y1 = 245;
+            // line.x2 = line.x1 + 200;
+            // line.y2 = 245;
         });
 
         this.archives$.pipe(map((archives) => {
@@ -115,7 +125,7 @@ export class OutsideTemperatureComponent implements AfterViewInit, OnDestroy {
         });
     }
 
-    @HostListener('window:resize', ['$event'])
+    @HostListener('window:resize', [])
     onResize() {
         this.chart.deepInvalidate();
     }

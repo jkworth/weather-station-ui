@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --no-live-reload --host 0.0.0.0",
-    "start:prod": "ng serve --no-live-reload --host 0.0.0.0 --prod",
+    "start": "ng serve --host 0.0.0.0",
+    "start:no-reload": "ng serve --no-live-reload --host 0.0.0.0",
+    "start:prod": "ng serve --host 0.0.0.0 --prod",
+    "start:prod:no-reload": "ng serve --no-live-reload --host 0.0.0.0 --prod",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint --fix",
