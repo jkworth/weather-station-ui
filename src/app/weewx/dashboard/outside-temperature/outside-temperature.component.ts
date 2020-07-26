@@ -49,7 +49,7 @@ export class OutsideTemperatureComponent implements AfterViewInit, OnDestroy {
             // Main label
             this.label = this.chart.createChild(am4core.Label);
             this.label.isMeasured = false;
-            this.label.fontSize = '9vw';
+            this.label.fontSize = '12vw';
             this.label.align = 'center';
             this.label.x = am4core.percent(50);
             this.label.y = am4core.percent(55);
@@ -57,6 +57,17 @@ export class OutsideTemperatureComponent implements AfterViewInit, OnDestroy {
             this.label.verticalCenter = 'middle';
             this.label.fill = am4core.color('#ddd');
             this.label.text = '-';
+
+            const degreeLabel = this.chart.createChild(am4core.Label);
+            degreeLabel.isMeasured = false;
+            degreeLabel.fontSize = '2vw';
+            degreeLabel.align = 'center';
+            degreeLabel.x = am4core.percent(88);
+            degreeLabel.y = am4core.percent(100);
+            degreeLabel.horizontalCenter = 'middle';
+            degreeLabel.verticalCenter = 'middle';
+            degreeLabel.fill = am4core.color('rgba(221,221,221,0.60)');
+            degreeLabel.text = '°F';
 
             const colorRanges = [
                 {stop: -25, color: '#9c2faf'},
@@ -91,16 +102,6 @@ export class OutsideTemperatureComponent implements AfterViewInit, OnDestroy {
             this.hand.radius = am4core.percent(85);
             this.hand.startWidth = 10;
             this.hand.value = Number.MIN_VALUE;
-
-            // const line = this.chart.createChild(am4core.Line);
-            // line.isMeasured = false;
-            // line.stroke = am4core.color('#ddd');
-            // line.strokeWidth = 4;
-            // const width = this.chart.contentWidth;
-            // line.x1 = (width / 2) - 100 + 20;
-            // line.y1 = 245;
-            // line.x2 = line.x1 + 200;
-            // line.y2 = 245;
         });
 
         this.archives$.pipe(map((archives) => {
@@ -112,7 +113,7 @@ export class OutsideTemperatureComponent implements AfterViewInit, OnDestroy {
 
             this.zone.runOutsideAngular(() => {
                 this.hand.showValue(archive.outsideTemperature, 1000, am4core.ease.cubicInOut);
-                this.label.text = Math.round(archive.outsideTemperature).toString() + '°';
+                this.label.text = Math.round(archive.outsideTemperature).toString();
             });
         });
     }

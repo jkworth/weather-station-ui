@@ -97,8 +97,6 @@ export class TemporalLineChartComponent implements AfterViewInit, OnDestroy {
             this.chart = am4core.create(this.displayEleRef.nativeElement, XYChart);
             this.chart.dateFormatter.dateFormat = 'HH:mm';
             this.chart.responsive.enabled = true;
-            // this.chart.interactionsEnabled = false;
-            // this.chart.zoomOutButton.disabled = true;
 
             this.createDateAxis();
             this.createTemperatureAxis();
@@ -177,8 +175,7 @@ export class TemporalLineChartComponent implements AfterViewInit, OnDestroy {
         series.name = label;
         series.tooltipText = '{valueY}';
         series.stroke = color;
-        series.strokeWidth = 2;
-        // series.tensionX = 0.8;
+        series.strokeWidth = 3;
         series.numberFormatter = new NumberFormatter();
         series.numberFormatter.numberFormat = format;
         series.showOnInit = false;
@@ -210,7 +207,7 @@ export class TemporalLineChartComponent implements AfterViewInit, OnDestroy {
         valueAxis.renderer.labels.template.fontSize = 12;
         valueAxis.renderer.opposite = opposite;
         valueAxis.renderer.line.strokeOpacity = 1;
-        valueAxis.renderer.line.strokeWidth = 2;
+        valueAxis.renderer.line.strokeWidth = 3;
         valueAxis.renderer.line.stroke = color;
         valueAxis.renderer.grid.template.strokeOpacity = 0;
 

@@ -19,7 +19,7 @@ interface WeeWxApiResponse<T> {
 })
 export class WeeWXService {
 
-    private static HOST = 'http://192.168.86.3:3000';
+    private static HOST = 'https://innerharbor.duckdns.org:3000';
     private static API_BASE = '/api/v1';
 
     constructor(private httpClient: HttpClient) {
