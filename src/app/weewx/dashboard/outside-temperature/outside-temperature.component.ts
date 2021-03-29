@@ -7,7 +7,7 @@ import {Select} from '@ngxs/store';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {ArchiveEntity} from '../../entities';
-import {ARCHIVE_STATE_TOKEN, ArchiveStateModel} from '../../stores/archive/archive.state';
+import {ArchiveStateModel, ARCHIVE_STATE_TOKEN} from '../../stores/archive/archive.state';
 
 @Component({
     selector: 'weewx-outside-temperature',
