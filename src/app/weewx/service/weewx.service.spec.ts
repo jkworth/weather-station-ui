@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { WeeWXService } from './weewx.service';
 
@@ -5,13 +6,13 @@ describe('WeewxService', () => {
   let service: WeeWXService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule]
+    });
     service = TestBed.inject(WeeWXService);
   });
 
-  it('should be created', () => {
-    expect(service)
-      .toBeTruthy()
-      .catch((err) => console.error(err));
+  it('should be created', async () => {
+    await expect(service).toBeDefined();
   });
 });
