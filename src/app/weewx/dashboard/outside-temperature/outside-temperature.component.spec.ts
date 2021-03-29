@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import {OutsideTemperatureComponent} from './outside-temperature.component';
 
@@ -6,7 +6,7 @@ describe('OutsideTemperatureComponent', () => {
     let component: OutsideTemperatureComponent;
     let fixture: ComponentFixture<OutsideTemperatureComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [OutsideTemperatureComponent]
         })

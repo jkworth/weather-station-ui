@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import {TemporalLineChartComponent} from './temporal-line-chart.component';
 
@@ -6,7 +6,7 @@ describe('TemporalLineChartComponent', () => {
     let component: TemporalLineChartComponent;
     let fixture: ComponentFixture<TemporalLineChartComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [TemporalLineChartComponent]
         })
