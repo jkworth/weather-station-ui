@@ -14,7 +14,7 @@ import { ArchiveStateModel, ARCHIVE_STATE_TOKEN } from '../../stores/archive/arc
 @Component({
   selector: 'weewx-temporal-line-chart',
   templateUrl: './temporal-line-chart.component.html',
-  styleUrls: ['./temporal-line-chart.component.styl'],
+  styleUrls: ['./temporal-line-chart.component.styl']
 })
 export class TemporalLineChartComponent implements AfterViewInit, OnDestroy {
   @ViewChild('displayElement')
@@ -64,7 +64,7 @@ export class TemporalLineChartComponent implements AfterViewInit, OnDestroy {
 
     this.zone.runOutsideAngular(() => {
       // Add data
-      const lastEntry = this.chart.data[this.chart.data.length - 1]?.dateTime || 0;
+      const lastEntry = (this.chart.data as ArchiveEntity[])[this.chart.data.length - 1]?.dateTime || 0;
       const newArchives = archives.filter((archive) => archive.dateTime > lastEntry);
 
       if (newArchives.length === 0) {
@@ -81,7 +81,7 @@ export class TemporalLineChartComponent implements AfterViewInit, OnDestroy {
         newArchives.map((archive) => {
           return {
             ...archive,
-            dateTime: tz(archive.dateTime, archive.stationTimezone).toDate(),
+            dateTime: tz(archive.dateTime, archive.stationTimezone).toDate()
           };
         }),
         removeCount
@@ -183,7 +183,7 @@ export class TemporalLineChartComponent implements AfterViewInit, OnDestroy {
       this.chart.series.each((item) => {
         text +=
           `[${(item.stroke as Color).hex}]●[/] ${item.name.replace(/ \([^)]*\)/, '')}: ` +
-          `{${item.dataFields.valueY}.formatNumber('${item.numberFormatter.numberFormat}')}` +
+          `{${item.dataFields.valueY}.formatNumber('${item.numberFormatter.numberFormat as string}')}` +
           `${item.dataFields.valueY === 'outsideHumidity' ? '%' : ''}\n`;
       });
       return text;

@@ -1,5 +1,3 @@
-import {ArchiveState} from './archive/archive.state';
+import { ArchiveState } from './archive/archive.state';
 
-export const stores = [
-    ArchiveState
-];
+export const stores = [ArchiveState];

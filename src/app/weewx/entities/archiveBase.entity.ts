@@ -1,6 +1,6 @@
 export abstract class ArchiveBaseEntity {
-    dateTime: number;
-    usUnits: number;
-    interval: number;
-    stationTimezone: string;
+  dateTime: number;
+  usUnits: number;
+  interval: number;
+  stationTimezone: string;
 }
