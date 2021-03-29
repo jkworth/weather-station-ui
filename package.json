@@ -16,21 +16,22 @@
     "ci": "npm run build",
     "postci": "#npm run test",
     "predeploy": "npm run build",
-    "deploy": "firebase deploy"
+    "deploy": "firebase deploy",
+    "postinstall": "ngcc"
   },
   "private": true,
   "dependencies": {
     "@amcharts/amcharts4": "^4.9.33",
-    "@angular/animations": "^9.0.7",
-    "@angular/common": "^9.0.7",
-    "@angular/compiler": "^9.0.7",
-    "@angular/core": "^9.0.7",
-    "@angular/forms": "^9.0.7",
-    "@angular/localize": "^9.1.12",
-    "@angular/platform-browser": "^9.0.7",
-    "@angular/platform-browser-dynamic": "^9.0.7",
-    "@angular/router": "^9.0.7",
-    "@angular/service-worker": "^9.0.7",
+    "@angular/animations": "^10.2.4",
+    "@angular/common": "^10.2.4",
+    "@angular/compiler": "^10.2.4",
+    "@angular/core": "^10.2.4",
+    "@angular/forms": "^10.2.4",
+    "@angular/localize": "^10.2.4",
+    "@angular/platform-browser": "^10.2.4",
+    "@angular/platform-browser-dynamic": "^10.2.4",
+    "@angular/router": "^10.2.4",
+    "@angular/service-worker": "^10.2.4",
     "@ng-bootstrap/ng-bootstrap": "^6.2.0",
     "@ngxs/logger-plugin": "^3.6.2",
     "@ngxs/store": "^3.6.2",
@@ -44,8 +45,8 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.1001.3",
     "@angular/cli": "^9.0.7",
-    "@angular/compiler-cli": "^9.0.7",
-    "@angular/language-service": "^9.0.7",
+    "@angular/compiler-cli": "^10.2.4",
+    "@angular/language-service": "^10.2.4",
     "@types/jasmine": "^3.5.11",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.12.53",
@@ -61,6 +62,6 @@
     "protractor": "^7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~5.18.0",
-    "typescript": "~3.7.5"
+    "typescript": "~4.0.7"
   }
 }
