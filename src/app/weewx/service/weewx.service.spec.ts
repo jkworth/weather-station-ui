@@ -12,7 +12,7 @@ describe('WeewxService', () => {
     service = TestBed.inject(WeeWXService);
   });
 
-  it('should be created', async () => {
-    await expect(service).toBeDefined();
+  it('should be created', () => {
+    expect(service).toBeDefined();
   });
 });

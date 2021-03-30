@@ -10,10 +10,10 @@ describe('AppComponent', () => {
     }).compileComponents();
   });
 
-  it('should create the app', async () => {
+  it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    await expect(app).toBeTruthy();
+    expect(app).toHaveBeenCalled();
   });
 
   //   it(`should have as title 'weather-station'`, () => {

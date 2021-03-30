@@ -19,7 +19,7 @@ describe('OutsideTemperatureComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', async () => {
-    await expect(component).toBeDefined();
+  it('should create', () => {
+    expect(component).toBeDefined();
   });
 });
