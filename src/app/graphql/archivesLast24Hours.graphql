@@ -1,0 +1,7 @@
+query archivesLast24Hours {
+  archives {
+    dewPointF
+    feelsF
+    tempF
+  }
+}
