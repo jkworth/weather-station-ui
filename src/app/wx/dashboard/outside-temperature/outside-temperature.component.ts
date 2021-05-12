@@ -6,11 +6,11 @@ import { AfterViewInit, Component, ElementRef, HostListener, NgZone, OnDestroy, 
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ArchiveEntity } from '../../entities';
-import { ArchiveStateModel, ARCHIVE_STATE_TOKEN } from '../../stores/archive/archive.state';
+import { Temperature } from 'src/generated/graphql';
+import { TemperatureStateModel, TEMPERATURE_STATE_TOKEN } from '../../stores/temperatures/temperatures.state';
 
 @Component({
-  selector: 'weewx-outside-temperature',
+  selector: 'wx-outside-temperature',
   templateUrl: './outside-temperature.component.html',
   styleUrls: ['./outside-temperature.component.styl']
 })
@@ -18,8 +18,8 @@ export class OutsideTemperatureComponent implements AfterViewInit, OnDestroy {
   @ViewChild('displayElement')
   displayEleRef: ElementRef;
 
-  @Select(ARCHIVE_STATE_TOKEN)
-  archives$: Observable<ArchiveStateModel>;
+  @Select(TEMPERATURE_STATE_TOKEN)
+  temperatures$: Observable<TemperatureStateModel>;
 
   private chart: am4charts.GaugeChart;
   private axis: am4charts.ValueAxis<am4charts.AxisRendererCircular>;
@@ -139,24 +139,17 @@ export class OutsideTemperatureComponent implements AfterViewInit, OnDestroy {
   }
 
   private handleDataUpdates() {
-    this.archives$
-      .pipe(
-        map((archives) => {
-          return archives.records[archives.records.length - 1];
-        })
-      )
-      .subscribe((archive: ArchiveEntity) => {
-        if (!archive) {
-          return;
-        }
-
-        this.zone.runOutsideAngular(() => {
-          this.hand.showValue(archive.outsideTemperature, 1000, am4core.ease.cubicInOut);
-          this.tempLabel.text = Math.round(archive.outsideTemperature).toString();
-          this.humidityLabel.text = `${Math.round(archive.outsideHumidity).toString()}`;
-          this.feelsLikeLabel.text = `${Math.round(archive.heatIndex).toString()}`;
-        });
+    this.temperatures$.pipe(map((temps) => temps.records.slice(-1)[0])).subscribe((temp: Temperature) => {
+      if (!temp) {
+        return;
+      }
+      this.zone.runOutsideAngular(() => {
+        this.hand.showValue(temp.temp, 1000, am4core.ease.cubicInOut);
+        this.tempLabel.text = Math.round(temp.temp).toString();
+        this.humidityLabel.text = `${Math.round(temp.windChill).toString()}`;
+        this.feelsLikeLabel.text = `${Math.round(temp.feelsLike).toString()}`;
       });
+    });
   }
 
   private setupHumidityLabel() {
@@ -180,7 +173,7 @@ export class OutsideTemperatureComponent implements AfterViewInit, OnDestroy {
     valueTypeLabel.horizontalCenter = 'middle';
     valueTypeLabel.verticalCenter = 'middle';
     valueTypeLabel.fill = am4core.color('#1eaaf1');
-    valueTypeLabel.text = 'Humidity';
+    valueTypeLabel.text = 'Wind Chill';
   }
 
   private setupFeelLikeLabel() {
@@ -204,6 +197,6 @@ export class OutsideTemperatureComponent implements AfterViewInit, OnDestroy {
     valueTypeLabel.horizontalCenter = 'middle';
     valueTypeLabel.verticalCenter = 'middle';
     valueTypeLabel.fill = am4core.color('#fb572f');
-    valueTypeLabel.text = 'Heat Index';
+    valueTypeLabel.text = 'Feels Like';
   }
 }

@@ -6,11 +6,13 @@ generates:
     config:
       declarationKind: interface
     plugins:
-      - 'typescript'
-      - 'typescript-operations'
-      - 'typescript-apollo-angular'
-      - 'typescript-document-nodes'
-      - 'fragment-matcher'
+      - typescript
+      - typescript-operations
+      - typescript-resolvers
+      - typescript-apollo-angular
+  src/generated/schema.graphql:
+    plugins:
+      - 'schema-ast'
   src/generated/graphql.schema.json:
     plugins:
-      - 'introspection'
+      - introspection

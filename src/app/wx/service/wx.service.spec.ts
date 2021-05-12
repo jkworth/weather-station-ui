@@ -1,15 +1,15 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { WeeWXService } from './weewx.service';
+import { WxService } from './wx.service';
 
-describe('WeewxService', () => {
-  let service: WeeWXService;
+describe('WxService', () => {
+  let service: WxService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule]
     });
-    service = TestBed.inject(WeeWXService);
+    service = TestBed.inject(WxService);
   });
 
   it('should be created', () => {

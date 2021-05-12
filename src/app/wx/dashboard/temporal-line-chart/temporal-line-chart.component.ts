@@ -4,15 +4,12 @@ import * as am4core from '@amcharts/amcharts4/core';
 import { Color, NumberFormatter } from '@amcharts/amcharts4/core';
 import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, Inject, NgZone, OnDestroy, ViewChild } from '@angular/core';
-import { Select } from '@ngxs/store';
 import { tz } from 'moment-timezone';
-import { Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 import { ArchiveEntity } from '../../entities';
-import { ArchiveStateModel, ARCHIVE_STATE_TOKEN } from '../../stores/archive/archive.state';
 
 @Component({
-  selector: 'weewx-temporal-line-chart',
+  selector: 'wx-temporal-line-chart',
   templateUrl: './temporal-line-chart.component.html',
   styleUrls: ['./temporal-line-chart.component.styl']
 })
@@ -20,8 +17,8 @@ export class TemporalLineChartComponent implements AfterViewInit, OnDestroy {
   @ViewChild('displayElement')
   displayEleRef: ElementRef;
 
-  @Select(ARCHIVE_STATE_TOKEN)
-  archives$: Observable<ArchiveStateModel>;
+  // @Select(ARCHIVE_STATE_TOKEN)
+  // archives$: Observable<ArchiveStateModel>;
 
   private chart: am4charts.XYChart;
   private dateAxis: DateAxis;
@@ -34,17 +31,17 @@ export class TemporalLineChartComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     this.setupChart();
 
-    this.subscriptions.add(
-      this.archives$
-        .pipe(
-          map((archives) => {
-            return archives.records;
-          })
-        )
-        .subscribe((archives: ArchiveEntity[]) => {
-          this.updateData(archives);
-        })
-    );
+    // this.subscriptions.add(
+    //   this.archives$
+    //     .pipe(
+    //       map((archives) => {
+    //         return archives.records;
+    //       })
+    //     )
+    //     .subscribe((archives: ArchiveEntity[]) => {
+    //       this.updateData(archives);
+    //     })
+    // );
   }
 
   ngOnDestroy(): void {

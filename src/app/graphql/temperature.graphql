@@ -1,0 +1,25 @@
+query temperaturesForLast24Hours {
+  temperaturesForLast24Hours {
+    device
+    dewPoint
+    feelsLike
+    heatIndex
+    source
+    temp
+    timestamp
+    windChill
+  }
+}
+
+subscription newTemperatureAdded {
+  newTemperatureAdded {
+    device
+    dewPoint
+    feelsLike
+    heatIndex
+    source
+    temp
+    timestamp
+    windChill
+  }
+}

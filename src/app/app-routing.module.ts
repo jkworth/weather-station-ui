@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { WeewxDashboardComponent } from './weewx/dashboard/weewx-dashboard.component';
+import { WxDashboardComponent } from './wx/dashboard/wx-dashboard.component';
 
 const routes: Routes = [
   {
     path: 'dashboard',
-    component: WeewxDashboardComponent
+    component: WxDashboardComponent
   },
   {
     path: '',

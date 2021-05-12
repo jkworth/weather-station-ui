@@ -1,0 +1,321 @@
+type AccessStatus {
+  battery: String!
+  timestamp: DateTime!
+}
+
+input AccessStatusWhereArgs {
+  battery: OperatorBase
+  timestamp: OperatorBase
+}
+
+type Archive {
+  dewPointF: Float!
+  feelsF: Float
+  light: Int
+  lightSeconds: Int
+  lightning: Int
+  pressureinHg: Float!
+  rainIn: Float!
+  relH: Int!
+  tempF: Float!
+  timestamp: DateTime!
+  totalRainIn: Float!
+  uvIndex: Int
+  windDeg: Int!
+  windGustDeg: Int
+  windGustMph: Int
+  windSpeedMph: Float!
+  windSpeedMphAvg: Float
+}
+
+input ArchiveWhereArgs {
+  dewPointF: OperatorBase
+  feelsF: OperatorBase
+  light: OperatorBase
+  lightSeconds: OperatorBase
+  lightning: OperatorBase
+  pressureinHg: OperatorBase
+  rainIn: OperatorBase
+  relH: OperatorBase
+  tempF: OperatorBase
+  timestamp: OperatorBase
+  totalRainIn: OperatorBase
+  uvIndex: OperatorBase
+  windDeg: OperatorBase
+  windGustDeg: OperatorBase
+  windGustMph: OperatorBase
+  windSpeedMph: OperatorBase
+  windSpeedMphAvg: OperatorBase
+}
+
+type AtlasLightning {
+  currentStrikes: Int!
+  dailyStrikes: Int!
+  date: DateTime!
+  timestamp: DateTime!
+}
+
+input AtlasLightningWhereArgs {
+  currentStrikes: OperatorBase
+  dailyStrikes: OperatorBase
+  date: OperatorBase
+  timestamp: OperatorBase
+}
+
+type AtlasStatus {
+  battery: String!
+  rssi: Boolean!
+  timestamp: DateTime!
+}
+
+input AtlasStatusWhereArgs {
+  battery: OperatorBase
+  rssi: OperatorBase
+  timestamp: OperatorBase
+}
+
+type DailyRain {
+  dailyRainIn: Float!
+  date: DateTime!
+  device: String!
+  source: String!
+  timestamp: DateTime
+}
+
+input DailyRainWhereArgs {
+  dailyRainIn: OperatorBase
+  date: OperatorBase
+  device: OperatorBase
+  source: OperatorBase
+  timestamp: OperatorBase
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Humidity {
+  device: String!
+  relative: Int!
+  source: String!
+  timestamp: DateTime!
+}
+
+input HumidityWhereArgs {
+  device: OperatorBase
+  relative: OperatorBase
+  source: OperatorBase
+  timestamp: OperatorBase
+}
+
+type IrisStatus {
+  battery: String!
+  device: String!
+  rssi: Boolean!
+  timestamp: DateTime!
+}
+
+input IrisStatusWhereArgs {
+  battery: OperatorBase
+  device: OperatorBase
+  rssi: OperatorBase
+  timestamp: OperatorBase
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+type Light {
+  intensity: Int!
+  seconds: Int!
+  timestamp: DateTime
+}
+
+input LightWhereArgs {
+  intensity: OperatorBase
+  seconds: OperatorBase
+  timestamp: OperatorBase
+}
+
+type LightningDatum {
+  interference: Boolean!
+  lastStrikeDistance: Int
+  lastStrikeTimeStamp: DateTime
+  source: String!
+  strikes: Int!
+}
+
+input LightningDatumWhereArgs {
+  interference: OperatorBase
+  lastStrikeDistance: OperatorBase
+  lastStrikeTimeStamp: OperatorBase
+  source: OperatorBase
+  strikes: OperatorBase
+}
+
+input OperatorBase {
+  """A single number, boolean, or string value"""
+  Equal: JSON
+
+  """Not Case Sensitive, Contains a single number, boolean, or string value"""
+  ILike: JSON
+
+  """An ARRAY of strings or numbers"""
+  In: JSON
+
+  """
+  Pass true or false to this operator to return if column value is null or not
+  """
+  IsNull: JSON
+
+  """Comparison between two numbers or dates, if one is less than the other"""
+  LessThan: JSON
+
+  """
+  Comparison between two numbers or dates, if one is less than or equal to the other
+  """
+  LessThanOrEqualTo: JSON
+
+  """Case Sensitive, Contains a single number, boolean, or string value"""
+  Like: JSON
+
+  """
+  Comparison between two numbers or dates, if one is greater than the other
+  """
+  MoreThan: JSON
+
+  """
+  Comparison between two numbers or dates, if one is greater than or equal to the other
+  """
+  MoreThanOrEqualTo: JSON
+
+  """A single number, boolean, or string value"""
+  Not: JSON
+
+  """
+  Not Case Sensitive, Does not contain a single number, boolean, or string value
+  """
+  NotILike: JSON
+}
+
+type Pressure {
+  device: String!
+  inchesOfHg: Float!
+  source: String!
+  timestamp: DateTime!
+}
+
+input PressureWhereArgs {
+  device: OperatorBase
+  inchesOfHg: OperatorBase
+  source: OperatorBase
+  timestamp: OperatorBase
+}
+
+type Query {
+  accessStatuses(where: [AccessStatusWhereArgs!]): [AccessStatus!]!
+  archives(where: [ArchiveWhereArgs!]): [Archive!]!
+  atlasLightnings(where: [AtlasLightningWhereArgs!]): [AtlasLightning!]!
+  atlasStatuses(where: [AtlasStatusWhereArgs!]): [AtlasStatus!]!
+  dailyRains(where: [DailyRainWhereArgs!]): [DailyRain!]!
+  humidities(where: [HumidityWhereArgs!]): [Humidity!]!
+  irisStatuses(where: [IrisStatusWhereArgs!]): [IrisStatus!]!
+  lightningData(where: [LightningDatumWhereArgs!]): [LightningDatum!]!
+  lights(where: [LightWhereArgs!]): [Light!]!
+  pressures(where: [PressureWhereArgs!]): [Pressure!]!
+  rain(where: [RainWhereArgs!]): [Rain!]!
+  temperaturesForLast24Hours: [Temperature!]!
+  uvIndexes(where: [UVIndexWhereArgs!]): [UVIndex!]!
+  windDirections(where: [WindDirectionWhereArgs!]): [WindDirection!]!
+  windSpeeds(where: [WindSpeedWhereArgs!]): [WindSpeed!]!
+}
+
+type Rain {
+  device: String!
+  inches: Float!
+  source: String!
+  timestamp: DateTime!
+}
+
+input RainWhereArgs {
+  device: OperatorBase
+  inches: OperatorBase
+  source: OperatorBase
+  timestamp: OperatorBase
+}
+
+type Subscription {
+  newAccessStatusAdded: AccessStatus!
+  newArchiveAdded: Archive!
+  newAtlasLightningAdded: AtlasLightning!
+  newAtlasStatusAdded: AtlasStatus!
+  newDailyRainAdded: DailyRain!
+  newHumidityAdded: Humidity!
+  newIrisStatusAdded: IrisStatus!
+  newLightAdded: Light!
+  newLightningDatumAdded: LightningDatum!
+  newPressureAdded: Pressure!
+  newRainAdded: Rain!
+  newTemperatureAdded: Temperature!
+  newUVIndexAdded: UVIndex!
+  newWindDirectionAdded: WindDirection!
+  newWindSpeedAdded: WindSpeed!
+}
+
+type Temperature {
+  device: String!
+  dewPoint: Float
+  feelsLike: Float
+  heatIndex: Float
+  source: String!
+  temp: Float!
+  timestamp: DateTime!
+  windChill: Float
+}
+
+type UVIndex {
+  timestamp: DateTime!
+  value: Int!
+}
+
+input UVIndexWhereArgs {
+  timestamp: OperatorBase
+  value: OperatorBase
+}
+
+type WindDirection {
+  degrees: Int!
+  device: String!
+  gust: Int
+  source: String!
+  timestamp: DateTime!
+}
+
+input WindDirectionWhereArgs {
+  degrees: OperatorBase
+  device: OperatorBase
+  gust: OperatorBase
+  source: OperatorBase
+  timestamp: OperatorBase
+}
+
+type WindSpeed {
+  average: Float
+  device: String!
+  gust: Float
+  source: String!
+  speed: Float!
+  timestamp: DateTime!
+}
+
+input WindSpeedWhereArgs {
+  average: OperatorBase
+  device: OperatorBase
+  gust: OperatorBase
+  source: OperatorBase
+  speed: OperatorBase
+  timestamp: OperatorBase
+}

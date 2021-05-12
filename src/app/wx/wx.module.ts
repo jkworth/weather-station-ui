@@ -5,7 +5,8 @@ import { NgxsModule } from '@ngxs/store';
 import { environment } from '../../environments/environment';
 import { OutsideTemperatureComponent } from './dashboard/outside-temperature/outside-temperature.component';
 import { TemporalLineChartComponent } from './dashboard/temporal-line-chart/temporal-line-chart.component';
-import { WeewxDashboardComponent } from './dashboard/weewx-dashboard.component';
+import { WxDashboardComponent } from './dashboard/wx-dashboard.component';
+import { WxService } from './service/wx.service';
 import { stores } from './stores';
 
 @NgModule({
@@ -14,7 +15,11 @@ import { stores } from './stores';
     !environment.production ? NgxsLoggerPluginModule.forRoot() : [],
     HttpClientModule
   ],
-  declarations: [WeewxDashboardComponent, OutsideTemperatureComponent, TemporalLineChartComponent],
+  declarations: [WxDashboardComponent, OutsideTemperatureComponent, TemporalLineChartComponent],
   providers: [HttpClientModule]
 })
-export class WeeWXModule {}
+export class WxModule {
+  constructor(wxService: WxService) {
+    wxService.start();
+  }
+}
