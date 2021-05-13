@@ -1,0 +1,13 @@
+query rainForLast24Hours {
+  rainForLast24Hours {
+    inches
+    timestamp
+  }
+}
+
+subscription newRainAdded {
+  newRainAdded {
+    inches
+    timestamp
+  }
+}

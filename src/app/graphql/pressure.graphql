@@ -1,0 +1,13 @@
+query pressureForLast24Hours {
+  pressureForLast24Hours {
+    inchesOfHg
+    timestamp
+  }
+}
+
+subscription newPressureAdded {
+  newPressureAdded {
+    inchesOfHg
+    timestamp
+  }
+}

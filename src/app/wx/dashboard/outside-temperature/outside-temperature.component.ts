@@ -3,11 +3,16 @@ import { ClockHand } from '@amcharts/amcharts4/charts';
 import * as am4core from '@amcharts/amcharts4/core';
 import { Label } from '@amcharts/amcharts4/core';
 import { AfterViewInit, Component, ElementRef, HostListener, NgZone, OnDestroy, ViewChild } from '@angular/core';
-import { Select } from '@ngxs/store';
-import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Temperature } from 'src/generated/graphql';
-import { TemperatureStateModel, TEMPERATURE_STATE_TOKEN } from '../../stores/temperatures/temperatures.state';
+import { HumidityFacade } from '../../stores/humidity/humidity.facade';
+import { LightFacade } from '../../stores/light/light.facade';
+import { PressureFacade } from '../../stores/pressure/pressure.facade';
+import { RainFacade } from '../../stores/rain/rain.facade';
+import { TemperatureFacade } from '../../stores/temperatures/temperatures.facade';
+import { UvIndexFacade } from '../../stores/uv-index/uv-index.facade';
+import { WindDirectionFacade } from '../../stores/wind-direction/wind-direction.facade';
+import { WindSpeedFacade } from '../../stores/wind-speed/wind-speed.facade';
 
 @Component({
   selector: 'wx-outside-temperature',
@@ -18,9 +23,6 @@ export class OutsideTemperatureComponent implements AfterViewInit, OnDestroy {
   @ViewChild('displayElement')
   displayEleRef: ElementRef;
 
-  @Select(TEMPERATURE_STATE_TOKEN)
-  temperatures$: Observable<TemperatureStateModel>;
-
   private chart: am4charts.GaugeChart;
   private axis: am4charts.ValueAxis<am4charts.AxisRendererCircular>;
   private hand: ClockHand;
@@ -28,7 +30,17 @@ export class OutsideTemperatureComponent implements AfterViewInit, OnDestroy {
   private humidityLabel: Label;
   private feelsLikeLabel: Label;
 
-  constructor(private zone: NgZone) {}
+  constructor(
+    private zone: NgZone,
+    private humidityFacade: HumidityFacade,
+    private lightFacade: LightFacade,
+    private pressureFacade: PressureFacade,
+    private rainFacade: RainFacade,
+    private temperaturesFacade: TemperatureFacade,
+    private uvIndexFacade: UvIndexFacade,
+    private windDirectionFacade: WindDirectionFacade,
+    private windSpeedFacade: WindSpeedFacade
+  ) {}
 
   ngAfterViewInit(): void {
     this.zone.runOutsideAngular(() => {
@@ -41,7 +53,20 @@ export class OutsideTemperatureComponent implements AfterViewInit, OnDestroy {
       this.setupFeelLikeLabel();
     });
 
-    this.handleDataUpdates();
+    this.humidityFacade.values$.subscribe(() => {});
+    this.lightFacade.values$.subscribe(() => {});
+    this.pressureFacade.values$.subscribe(() => {});
+    this.rainFacade.values$.subscribe(() => {});
+    this.uvIndexFacade.values$.subscribe(() => {});
+    this.windDirectionFacade.values$.subscribe(() => {});
+    this.windSpeedFacade.values$.subscribe(() => {});
+
+    this.temperaturesFacade.temperatures$.pipe(map((temps) => temps.slice(-1)[0])).subscribe((temp: Temperature) => {
+      if (!temp) {
+        return;
+      }
+      this.handleDataUpdates(temp);
+    });
   }
 
   ngOnDestroy(): void {
@@ -55,6 +80,15 @@ export class OutsideTemperatureComponent implements AfterViewInit, OnDestroy {
   @HostListener('window:resize', [])
   onResize(): void {
     this.chart.deepInvalidate();
+  }
+
+  private handleDataUpdates(temp: Temperature) {
+    this.zone.runOutsideAngular(() => {
+      this.hand.showValue(temp.temp, 1000, am4core.ease.cubicInOut);
+      this.tempLabel.text = Math.round(temp.temp).toString();
+      this.humidityLabel.text = `${Math.round(temp.windChill).toString()}`;
+      this.feelsLikeLabel.text = `${Math.round(temp.feelsLike).toString()}`;
+    });
   }
 
   private setupTempIndicatorHand() {
@@ -136,20 +170,6 @@ export class OutsideTemperatureComponent implements AfterViewInit, OnDestroy {
     this.axis.strictMinMax = true;
     this.axis.renderer.labels.template.radius = 40;
     this.axis.renderer.labels.template.disabled = true;
-  }
-
-  private handleDataUpdates() {
-    this.temperatures$.pipe(map((temps) => temps.records.slice(-1)[0])).subscribe((temp: Temperature) => {
-      if (!temp) {
-        return;
-      }
-      this.zone.runOutsideAngular(() => {
-        this.hand.showValue(temp.temp, 1000, am4core.ease.cubicInOut);
-        this.tempLabel.text = Math.round(temp.temp).toString();
-        this.humidityLabel.text = `${Math.round(temp.windChill).toString()}`;
-        this.feelsLikeLabel.text = `${Math.round(temp.feelsLike).toString()}`;
-      });
-    });
   }
 
   private setupHumidityLabel() {

@@ -8,7 +8,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
-export interface Scalars {
+export abstract class Scalars {
   ID: string;
   String: string;
   Boolean: boolean;
@@ -18,22 +18,22 @@ export interface Scalars {
   DateTime: any;
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: any;
-}
+};
 
 
 
-export interface AccessStatus {
+export abstract class AccessStatus {
   __typename?: 'AccessStatus';
   battery: Scalars['String'];
   timestamp: Scalars['DateTime'];
-}
+};
 
-export interface AccessStatusWhereArgs {
+export abstract class AccessStatusWhereArgs {
   battery?: Maybe<OperatorBase>;
   timestamp?: Maybe<OperatorBase>;
-}
+};
 
-export interface Archive {
+export abstract class Archive {
   __typename?: 'Archive';
   dewPointF: Scalars['Float'];
   feelsF?: Maybe<Scalars['Float']>;
@@ -52,9 +52,9 @@ export interface Archive {
   windGustMph?: Maybe<Scalars['Int']>;
   windSpeedMph: Scalars['Float'];
   windSpeedMphAvg?: Maybe<Scalars['Float']>;
-}
+};
 
-export interface ArchiveWhereArgs {
+export abstract class ArchiveWhereArgs {
   dewPointF?: Maybe<OperatorBase>;
   feelsF?: Maybe<OperatorBase>;
   light?: Maybe<OperatorBase>;
@@ -72,116 +72,103 @@ export interface ArchiveWhereArgs {
   windGustMph?: Maybe<OperatorBase>;
   windSpeedMph?: Maybe<OperatorBase>;
   windSpeedMphAvg?: Maybe<OperatorBase>;
-}
+};
 
-export interface AtlasLightning {
+export abstract class AtlasLightning {
   __typename?: 'AtlasLightning';
   currentStrikes: Scalars['Int'];
   dailyStrikes: Scalars['Int'];
   date: Scalars['DateTime'];
   timestamp: Scalars['DateTime'];
-}
+};
 
-export interface AtlasLightningWhereArgs {
+export abstract class AtlasLightningWhereArgs {
   currentStrikes?: Maybe<OperatorBase>;
   dailyStrikes?: Maybe<OperatorBase>;
   date?: Maybe<OperatorBase>;
   timestamp?: Maybe<OperatorBase>;
-}
+};
 
-export interface AtlasStatus {
+export abstract class AtlasStatus {
   __typename?: 'AtlasStatus';
   battery: Scalars['String'];
   rssi: Scalars['Boolean'];
   timestamp: Scalars['DateTime'];
-}
+};
 
-export interface AtlasStatusWhereArgs {
+export abstract class AtlasStatusWhereArgs {
   battery?: Maybe<OperatorBase>;
   rssi?: Maybe<OperatorBase>;
   timestamp?: Maybe<OperatorBase>;
-}
+};
 
-export interface DailyRain {
+export abstract class DailyRain {
   __typename?: 'DailyRain';
   dailyRainIn: Scalars['Float'];
   date: Scalars['DateTime'];
   device: Scalars['String'];
   source: Scalars['String'];
   timestamp?: Maybe<Scalars['DateTime']>;
-}
+};
 
-export interface DailyRainWhereArgs {
+export abstract class DailyRainWhereArgs {
   dailyRainIn?: Maybe<OperatorBase>;
   date?: Maybe<OperatorBase>;
   device?: Maybe<OperatorBase>;
   source?: Maybe<OperatorBase>;
   timestamp?: Maybe<OperatorBase>;
-}
+};
 
 
-export interface Humidity {
+export abstract class Humidity {
   __typename?: 'Humidity';
   device: Scalars['String'];
   relative: Scalars['Int'];
   source: Scalars['String'];
   timestamp: Scalars['DateTime'];
-}
+};
 
-export interface HumidityWhereArgs {
-  device?: Maybe<OperatorBase>;
-  relative?: Maybe<OperatorBase>;
-  source?: Maybe<OperatorBase>;
-  timestamp?: Maybe<OperatorBase>;
-}
-
-export interface IrisStatus {
+export abstract class IrisStatus {
   __typename?: 'IrisStatus';
   battery: Scalars['String'];
   device: Scalars['String'];
   rssi: Scalars['Boolean'];
   timestamp: Scalars['DateTime'];
-}
+};
 
-export interface IrisStatusWhereArgs {
+export abstract class IrisStatusWhereArgs {
   battery?: Maybe<OperatorBase>;
   device?: Maybe<OperatorBase>;
   rssi?: Maybe<OperatorBase>;
   timestamp?: Maybe<OperatorBase>;
-}
+};
 
 
-export interface Light {
+export abstract class Light {
   __typename?: 'Light';
   intensity: Scalars['Int'];
   seconds: Scalars['Int'];
   timestamp?: Maybe<Scalars['DateTime']>;
-}
+};
 
-export interface LightWhereArgs {
-  intensity?: Maybe<OperatorBase>;
-  seconds?: Maybe<OperatorBase>;
-  timestamp?: Maybe<OperatorBase>;
-}
-
-export interface LightningDatum {
+export abstract class LightningDatum {
   __typename?: 'LightningDatum';
   interference: Scalars['Boolean'];
   lastStrikeDistance?: Maybe<Scalars['Int']>;
   lastStrikeTimeStamp?: Maybe<Scalars['DateTime']>;
   source: Scalars['String'];
   strikes: Scalars['Int'];
-}
+};
 
-export interface LightningDatumWhereArgs {
+export abstract class LightningDatumWhereArgs {
   interference?: Maybe<OperatorBase>;
   lastStrikeDistance?: Maybe<OperatorBase>;
   lastStrikeTimeStamp?: Maybe<OperatorBase>;
   source?: Maybe<OperatorBase>;
   strikes?: Maybe<OperatorBase>;
-}
+};
 
-export interface OperatorBase {
+export abstract class OperatorBase {
   /** A single number, boolean, or string value */
   Equal?: Maybe<Scalars['JSON']>;
   /** Not Case Sensitive, Contains a single number, boolean, or string value */
@@ -204,128 +191,79 @@ export interface OperatorBase {
   Not?: Maybe<Scalars['JSON']>;
   /** Not Case Sensitive, Does not contain a single number, boolean, or string value */
   NotILike?: Maybe<Scalars['JSON']>;
-}
+};
 
-export interface Pressure {
+export abstract class Pressure {
   __typename?: 'Pressure';
   device: Scalars['String'];
   inchesOfHg: Scalars['Float'];
   source: Scalars['String'];
   timestamp: Scalars['DateTime'];
-}
+};
 
-export interface PressureWhereArgs {
-  device?: Maybe<OperatorBase>;
-  inchesOfHg?: Maybe<OperatorBase>;
-  source?: Maybe<OperatorBase>;
-  timestamp?: Maybe<OperatorBase>;
-}
-
-export interface Query {
+export abstract class Query {
   __typename?: 'Query';
   accessStatuses: Array<AccessStatus>;
   archives: Array<Archive>;
   atlasLightnings: Array<AtlasLightning>;
   atlasStatuses: Array<AtlasStatus>;
   dailyRains: Array<DailyRain>;
-  humidities: Array<Humidity>;
+  humidityForLast24Hours: Array<Humidity>;
   irisStatuses: Array<IrisStatus>;
+  lightForLast24Hours: Array<Light>;
   lightningData: Array<LightningDatum>;
-  lights: Array<Light>;
-  pressures: Array<Pressure>;
-  rain: Array<Rain>;
-  temperaturesForLast24Hours: Array<Temperature>;
-  uvIndexes: Array<UvIndex>;
-  windDirections: Array<WindDirection>;
-  windSpeeds: Array<WindSpeed>;
-}
+  pressureForLast24Hours: Array<Pressure>;
+  rainForLast24Hours: Array<Rain>;
+  temperatureForLast24Hours: Array<Temperature>;
+  uvIndexForLast24Hours: Array<UvIndex>;
+  windDirectionForLast24Hours: Array<WindDirection>;
+  windSpeedForLast24Hours: Array<WindSpeed>;
+};
 
 
-export interface QueryAccessStatusesArgs {
+export abstract class QueryAccessStatusesArgs {
   where?: Maybe<Array<AccessStatusWhereArgs>>;
-}
+};
 
 
-export interface QueryArchivesArgs {
+export abstract class QueryArchivesArgs {
   where?: Maybe<Array<ArchiveWhereArgs>>;
-}
+};
 
 
-export interface QueryAtlasLightningsArgs {
+export abstract class QueryAtlasLightningsArgs {
   where?: Maybe<Array<AtlasLightningWhereArgs>>;
-}
+};
 
 
-export interface QueryAtlasStatusesArgs {
+export abstract class QueryAtlasStatusesArgs {
   where?: Maybe<Array<AtlasStatusWhereArgs>>;
-}
+};
 
 
-export interface QueryDailyRainsArgs {
+export abstract class QueryDailyRainsArgs {
   where?: Maybe<Array<DailyRainWhereArgs>>;
-}
+};
 
 
-export interface QueryHumiditiesArgs {
-  where?: Maybe<Array<HumidityWhereArgs>>;
-}
-
-
-export interface QueryIrisStatusesArgs {
+export abstract class QueryIrisStatusesArgs {
   where?: Maybe<Array<IrisStatusWhereArgs>>;
-}
+};
 
 
-export interface QueryLightningDataArgs {
+export abstract class QueryLightningDataArgs {
   where?: Maybe<Array<LightningDatumWhereArgs>>;
-}
+};
 
-
-export interface QueryLightsArgs {
-  where?: Maybe<Array<LightWhereArgs>>;
-}
-
-
-export interface QueryPressuresArgs {
-  where?: Maybe<Array<PressureWhereArgs>>;
-}
-
-
-export interface QueryRainArgs {
-  where?: Maybe<Array<RainWhereArgs>>;
-}
-
-
-export interface QueryUvIndexesArgs {
-  where?: Maybe<Array<UvIndexWhereArgs>>;
-}
-
-
-export interface QueryWindDirectionsArgs {
-  where?: Maybe<Array<WindDirectionWhereArgs>>;
-}
-
-
-export interface QueryWindSpeedsArgs {
-  where?: Maybe<Array<WindSpeedWhereArgs>>;
-}
-
-export interface Rain {
+export abstract class Rain {
   __typename?: 'Rain';
   device: Scalars['String'];
   inches: Scalars['Float'];
   source: Scalars['String'];
   timestamp: Scalars['DateTime'];
-}
+};
 
-export interface RainWhereArgs {
-  device?: Maybe<OperatorBase>;
-  inches?: Maybe<OperatorBase>;
-  source?: Maybe<OperatorBase>;
-  timestamp?: Maybe<OperatorBase>;
-}
-
-export interface Subscription {
+export abstract class Subscription {
   __typename?: 'Subscription';
   newAccessStatusAdded: AccessStatus;
   newArchiveAdded: Archive;
@@ -339,12 +277,12 @@ export interface Subscription {
   newPressureAdded: Pressure;
   newRainAdded: Rain;
   newTemperatureAdded: Temperature;
-  newUVIndexAdded: UvIndex;
+  newUvIndexAdded: UvIndex;
   newWindDirectionAdded: WindDirection;
   newWindSpeedAdded: WindSpeed;
-}
+};
 
-export interface Temperature {
+export abstract class Temperature {
   __typename?: 'Temperature';
   device: Scalars['String'];
   dewPoint?: Maybe<Scalars['Float']>;
@@ -354,37 +292,24 @@ export interface Temperature {
   temp: Scalars['Float'];
   timestamp: Scalars['DateTime'];
   windChill?: Maybe<Scalars['Float']>;
-}
+};
 
-export interface UvIndex {
-  __typename?: 'UVIndex';
+export abstract class UvIndex {
+  __typename?: 'UvIndex';
   timestamp: Scalars['DateTime'];
   value: Scalars['Int'];
-}
+};
 
-export interface UvIndexWhereArgs {
-  timestamp?: Maybe<OperatorBase>;
-  value?: Maybe<OperatorBase>;
-}
-
-export interface WindDirection {
+export abstract class WindDirection {
   __typename?: 'WindDirection';
   degrees: Scalars['Int'];
   device: Scalars['String'];
   gust?: Maybe<Scalars['Int']>;
   source: Scalars['String'];
   timestamp: Scalars['DateTime'];
-}
+};
 
-export interface WindDirectionWhereArgs {
-  degrees?: Maybe<OperatorBase>;
-  device?: Maybe<OperatorBase>;
-  gust?: Maybe<OperatorBase>;
-  source?: Maybe<OperatorBase>;
-  timestamp?: Maybe<OperatorBase>;
-}
-
-export interface WindSpeed {
+export abstract class WindSpeed {
   __typename?: 'WindSpeed';
   average?: Maybe<Scalars['Float']>;
   device: Scalars['String'];
@@ -392,25 +317,104 @@ export interface WindSpeed {
   source: Scalars['String'];
   speed: Scalars['Float'];
   timestamp: Scalars['DateTime'];
-}
+};
 
-export interface WindSpeedWhereArgs {
-  average?: Maybe<OperatorBase>;
-  device?: Maybe<OperatorBase>;
-  gust?: Maybe<OperatorBase>;
-  source?: Maybe<OperatorBase>;
-  speed?: Maybe<OperatorBase>;
-  timestamp?: Maybe<OperatorBase>;
-}
-
-export type TemperaturesForLast24HoursQueryVariables = Exact<{ [key: string]: never; }>;
+export type HumidityForLast24HoursQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TemperaturesForLast24HoursQuery = (
+export type HumidityForLast24HoursQuery = (
   { __typename?: 'Query' }
-  & { temperaturesForLast24Hours: Array<(
+  & { humidityForLast24Hours: Array<(
+    { __typename?: 'Humidity' }
+    & Pick<Humidity, 'relative' | 'timestamp'>
+  )> }
+);
+
+export type NewHumidityAddedSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type NewHumidityAddedSubscription = (
+  { __typename?: 'Subscription' }
+  & { newHumidityAdded: (
+    { __typename?: 'Humidity' }
+    & Pick<Humidity, 'relative' | 'timestamp'>
+  ) }
+);
+
+export type LightForLast24HoursQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LightForLast24HoursQuery = (
+  { __typename?: 'Query' }
+  & { lightForLast24Hours: Array<(
+    { __typename?: 'Light' }
+    & Pick<Light, 'intensity' | 'seconds' | 'timestamp'>
+  )> }
+);
+
+export type NewLightAddedSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type NewLightAddedSubscription = (
+  { __typename?: 'Subscription' }
+  & { newLightAdded: (
+    { __typename?: 'Light' }
+    & Pick<Light, 'intensity' | 'seconds' | 'timestamp'>
+  ) }
+);
+
+export type PressureForLast24HoursQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type PressureForLast24HoursQuery = (
+  { __typename?: 'Query' }
+  & { pressureForLast24Hours: Array<(
+    { __typename?: 'Pressure' }
+    & Pick<Pressure, 'inchesOfHg' | 'timestamp'>
+  )> }
+);
+
+export type NewPressureAddedSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type NewPressureAddedSubscription = (
+  { __typename?: 'Subscription' }
+  & { newPressureAdded: (
+    { __typename?: 'Pressure' }
+    & Pick<Pressure, 'inchesOfHg' | 'timestamp'>
+  ) }
+);
+
+export type RainForLast24HoursQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type RainForLast24HoursQuery = (
+  { __typename?: 'Query' }
+  & { rainForLast24Hours: Array<(
+    { __typename?: 'Rain' }
+    & Pick<Rain, 'inches' | 'timestamp'>
+  )> }
+);
+
+export type NewRainAddedSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type NewRainAddedSubscription = (
+  { __typename?: 'Subscription' }
+  & { newRainAdded: (
+    { __typename?: 'Rain' }
+    & Pick<Rain, 'inches' | 'timestamp'>
+  ) }
+);
+
+export type TemperatureForLast24HoursQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type TemperatureForLast24HoursQuery = (
+  { __typename?: 'Query' }
+  & { temperatureForLast24Hours: Array<(
     { __typename?: 'Temperature' }
-    & Pick<Temperature, 'device' | 'dewPoint' | 'feelsLike' | 'heatIndex' | 'source' | 'temp' | 'timestamp' | 'windChill'>
+    & Pick<Temperature, 'dewPoint' | 'feelsLike' | 'heatIndex' | 'temp' | 'timestamp' | 'windChill'>
   )> }
 );
 
@@ -421,7 +425,73 @@ export type NewTemperatureAddedSubscription = (
   { __typename?: 'Subscription' }
   & { newTemperatureAdded: (
     { __typename?: 'Temperature' }
-    & Pick<Temperature, 'device' | 'dewPoint' | 'feelsLike' | 'heatIndex' | 'source' | 'temp' | 'timestamp' | 'windChill'>
+    & Pick<Temperature, 'dewPoint' | 'feelsLike' | 'heatIndex' | 'temp' | 'timestamp' | 'windChill'>
+  ) }
+);
+
+export type UvIndexForLast24HoursQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UvIndexForLast24HoursQuery = (
+  { __typename?: 'Query' }
+  & { uvIndexForLast24Hours: Array<(
+    { __typename?: 'UvIndex' }
+    & Pick<UvIndex, 'value' | 'timestamp'>
+  )> }
+);
+
+export type NewUvIndexAddedSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type NewUvIndexAddedSubscription = (
+  { __typename?: 'Subscription' }
+  & { newUvIndexAdded: (
+    { __typename?: 'UvIndex' }
+    & Pick<UvIndex, 'value' | 'timestamp'>
+  ) }
+);
+
+export type WindDirectionForLast24HoursQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type WindDirectionForLast24HoursQuery = (
+  { __typename?: 'Query' }
+  & { windDirectionForLast24Hours: Array<(
+    { __typename?: 'WindDirection' }
+    & Pick<WindDirection, 'degrees' | 'gust' | 'timestamp'>
+  )> }
+);
+
+export type NewWindDirectionAddedSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type NewWindDirectionAddedSubscription = (
+  { __typename?: 'Subscription' }
+  & { newWindDirectionAdded: (
+    { __typename?: 'WindDirection' }
+    & Pick<WindDirection, 'degrees' | 'gust' | 'timestamp'>
+  ) }
+);
+
+export type WindSpeedForLast24HoursQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type WindSpeedForLast24HoursQuery = (
+  { __typename?: 'Query' }
+  & { windSpeedForLast24Hours: Array<(
+    { __typename?: 'WindSpeed' }
+    & Pick<WindSpeed, 'speed' | 'gust' | 'average' | 'timestamp'>
+  )> }
+);
+
+export type NewWindSpeedAddedSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type NewWindSpeedAddedSubscription = (
+  { __typename?: 'Subscription' }
+  & { newWindSpeedAdded: (
+    { __typename?: 'WindSpeed' }
+    & Pick<WindSpeed, 'speed' | 'gust' | 'average' | 'timestamp'>
   ) }
 );
 
@@ -519,28 +589,21 @@ export type ResolversTypes = {
   DailyRainWhereArgs: DailyRainWhereArgs;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
   Humidity: ResolverTypeWrapper<Humidity>;
-  HumidityWhereArgs: HumidityWhereArgs;
   IrisStatus: ResolverTypeWrapper<IrisStatus>;
   IrisStatusWhereArgs: IrisStatusWhereArgs;
   JSON: ResolverTypeWrapper<Scalars['JSON']>;
   Light: ResolverTypeWrapper<Light>;
-  LightWhereArgs: LightWhereArgs;
   LightningDatum: ResolverTypeWrapper<LightningDatum>;
   LightningDatumWhereArgs: LightningDatumWhereArgs;
   OperatorBase: OperatorBase;
   Pressure: ResolverTypeWrapper<Pressure>;
-  PressureWhereArgs: PressureWhereArgs;
   Query: ResolverTypeWrapper<{}>;
   Rain: ResolverTypeWrapper<Rain>;
-  RainWhereArgs: RainWhereArgs;
   Subscription: ResolverTypeWrapper<{}>;
   Temperature: ResolverTypeWrapper<Temperature>;
-  UVIndex: ResolverTypeWrapper<UvIndex>;
-  UVIndexWhereArgs: UvIndexWhereArgs;
+  UvIndex: ResolverTypeWrapper<UvIndex>;
   WindDirection: ResolverTypeWrapper<WindDirection>;
-  WindDirectionWhereArgs: WindDirectionWhereArgs;
   WindSpeed: ResolverTypeWrapper<WindSpeed>;
-  WindSpeedWhereArgs: WindSpeedWhereArgs;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -561,28 +624,21 @@ export type ResolversParentTypes = {
   DailyRainWhereArgs: DailyRainWhereArgs;
   DateTime: Scalars['DateTime'];
   Humidity: Humidity;
-  HumidityWhereArgs: HumidityWhereArgs;
   IrisStatus: IrisStatus;
   IrisStatusWhereArgs: IrisStatusWhereArgs;
   JSON: Scalars['JSON'];
   Light: Light;
-  LightWhereArgs: LightWhereArgs;
   LightningDatum: LightningDatum;
   LightningDatumWhereArgs: LightningDatumWhereArgs;
   OperatorBase: OperatorBase;
   Pressure: Pressure;
-  PressureWhereArgs: PressureWhereArgs;
   Query: {};
   Rain: Rain;
-  RainWhereArgs: RainWhereArgs;
   Subscription: {};
   Temperature: Temperature;
-  UVIndex: UvIndex;
-  UVIndexWhereArgs: UvIndexWhereArgs;
+  UvIndex: UvIndex;
   WindDirection: WindDirection;
-  WindDirectionWhereArgs: WindDirectionWhereArgs;
   WindSpeed: WindSpeed;
-  WindSpeedWhereArgs: WindSpeedWhereArgs;
 };
 
 export type NgModuleDirectiveArgs = {   module: Scalars['String']; };
@@ -698,16 +754,16 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   atlasLightnings?: Resolver<Array<ResolversTypes['AtlasLightning']>, ParentType, ContextType, RequireFields<QueryAtlasLightningsArgs, never>>;
   atlasStatuses?: Resolver<Array<ResolversTypes['AtlasStatus']>, ParentType, ContextType, RequireFields<QueryAtlasStatusesArgs, never>>;
   dailyRains?: Resolver<Array<ResolversTypes['DailyRain']>, ParentType, ContextType, RequireFields<QueryDailyRainsArgs, never>>;
-  humidities?: Resolver<Array<ResolversTypes['Humidity']>, ParentType, ContextType, RequireFields<QueryHumiditiesArgs, never>>;
+  humidityForLast24Hours?: Resolver<Array<ResolversTypes['Humidity']>, ParentType, ContextType>;
   irisStatuses?: Resolver<Array<ResolversTypes['IrisStatus']>, ParentType, ContextType, RequireFields<QueryIrisStatusesArgs, never>>;
+  lightForLast24Hours?: Resolver<Array<ResolversTypes['Light']>, ParentType, ContextType>;
   lightningData?: Resolver<Array<ResolversTypes['LightningDatum']>, ParentType, ContextType, RequireFields<QueryLightningDataArgs, never>>;
-  lights?: Resolver<Array<ResolversTypes['Light']>, ParentType, ContextType, RequireFields<QueryLightsArgs, never>>;
-  pressures?: Resolver<Array<ResolversTypes['Pressure']>, ParentType, ContextType, RequireFields<QueryPressuresArgs, never>>;
-  rain?: Resolver<Array<ResolversTypes['Rain']>, ParentType, ContextType, RequireFields<QueryRainArgs, never>>;
-  temperaturesForLast24Hours?: Resolver<Array<ResolversTypes['Temperature']>, ParentType, ContextType>;
-  uvIndexes?: Resolver<Array<ResolversTypes['UVIndex']>, ParentType, ContextType, RequireFields<QueryUvIndexesArgs, never>>;
-  windDirections?: Resolver<Array<ResolversTypes['WindDirection']>, ParentType, ContextType, RequireFields<QueryWindDirectionsArgs, never>>;
-  windSpeeds?: Resolver<Array<ResolversTypes['WindSpeed']>, ParentType, ContextType, RequireFields<QueryWindSpeedsArgs, never>>;
+  pressureForLast24Hours?: Resolver<Array<ResolversTypes['Pressure']>, ParentType, ContextType>;
+  rainForLast24Hours?: Resolver<Array<ResolversTypes['Rain']>, ParentType, ContextType>;
+  temperatureForLast24Hours?: Resolver<Array<ResolversTypes['Temperature']>, ParentType, ContextType>;
+  uvIndexForLast24Hours?: Resolver<Array<ResolversTypes['UvIndex']>, ParentType, ContextType>;
+  windDirectionForLast24Hours?: Resolver<Array<ResolversTypes['WindDirection']>, ParentType, ContextType>;
+  windSpeedForLast24Hours?: Resolver<Array<ResolversTypes['WindSpeed']>, ParentType, ContextType>;
 };
 
 export type RainResolvers<ContextType = any, ParentType extends ResolversParentTypes['Rain'] = ResolversParentTypes['Rain']> = {
@@ -731,7 +787,7 @@ export type SubscriptionResolvers<ContextType = any, ParentType extends Resolver
   newPressureAdded?: SubscriptionResolver<ResolversTypes['Pressure'], "newPressureAdded", ParentType, ContextType>;
   newRainAdded?: SubscriptionResolver<ResolversTypes['Rain'], "newRainAdded", ParentType, ContextType>;
   newTemperatureAdded?: SubscriptionResolver<ResolversTypes['Temperature'], "newTemperatureAdded", ParentType, ContextType>;
-  newUVIndexAdded?: SubscriptionResolver<ResolversTypes['UVIndex'], "newUVIndexAdded", ParentType, ContextType>;
+  newUvIndexAdded?: SubscriptionResolver<ResolversTypes['UvIndex'], "newUvIndexAdded", ParentType, ContextType>;
   newWindDirectionAdded?: SubscriptionResolver<ResolversTypes['WindDirection'], "newWindDirectionAdded", ParentType, ContextType>;
   newWindSpeedAdded?: SubscriptionResolver<ResolversTypes['WindSpeed'], "newWindSpeedAdded", ParentType, ContextType>;
 };
@@ -748,7 +804,7 @@ export type TemperatureResolvers<ContextType = any, ParentType extends Resolvers
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type UvIndexResolvers<ContextType = any, ParentType extends ResolversParentTypes['UVIndex'] = ResolversParentTypes['UVIndex']> = {
+export type UvIndexResolvers<ContextType = any, ParentType extends ResolversParentTypes['UvIndex'] = ResolversParentTypes['UvIndex']> = {
   timestamp?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   value?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -790,7 +846,7 @@ export type Resolvers<ContextType = any> = {
   Rain?: RainResolvers<ContextType>;
   Subscription?: SubscriptionResolvers<ContextType>;
   Temperature?: TemperatureResolvers<ContextType>;
-  UVIndex?: UvIndexResolvers<ContextType>;
+  UvIndex?: UvIndexResolvers<ContextType>;
   WindDirection?: WindDirectionResolvers<ContextType>;
   WindSpeed?: WindSpeedResolvers<ContextType>;
 };
@@ -812,14 +868,166 @@ export type DirectiveResolvers<ContextType = any> = {
  * Use "DirectiveResolvers" root object instead. If you wish to get "IDirectiveResolvers", add "typesPrefix: I" to your config.
  */
 export type IDirectiveResolvers<ContextType = any> = DirectiveResolvers<ContextType>;
-export const TemperaturesForLast24HoursDocument = gql`
-    query temperaturesForLast24Hours {
-  temperaturesForLast24Hours {
-    device
+export const HumidityForLast24HoursDocument = gql`
+    query humidityForLast24Hours {
+  humidityForLast24Hours {
+    relative
+    timestamp
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class HumidityForLast24HoursGQL extends Apollo.Query<HumidityForLast24HoursQuery, HumidityForLast24HoursQueryVariables> {
+    document = HumidityForLast24HoursDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const NewHumidityAddedDocument = gql`
+    subscription newHumidityAdded {
+  newHumidityAdded {
+    relative
+    timestamp
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class NewHumidityAddedGQL extends Apollo.Subscription<NewHumidityAddedSubscription, NewHumidityAddedSubscriptionVariables> {
+    document = NewHumidityAddedDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const LightForLast24HoursDocument = gql`
+    query lightForLast24Hours {
+  lightForLast24Hours {
+    intensity
+    seconds
+    timestamp
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class LightForLast24HoursGQL extends Apollo.Query<LightForLast24HoursQuery, LightForLast24HoursQueryVariables> {
+    document = LightForLast24HoursDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const NewLightAddedDocument = gql`
+    subscription newLightAdded {
+  newLightAdded {
+    intensity
+    seconds
+    timestamp
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class NewLightAddedGQL extends Apollo.Subscription<NewLightAddedSubscription, NewLightAddedSubscriptionVariables> {
+    document = NewLightAddedDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const PressureForLast24HoursDocument = gql`
+    query pressureForLast24Hours {
+  pressureForLast24Hours {
+    inchesOfHg
+    timestamp
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class PressureForLast24HoursGQL extends Apollo.Query<PressureForLast24HoursQuery, PressureForLast24HoursQueryVariables> {
+    document = PressureForLast24HoursDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const NewPressureAddedDocument = gql`
+    subscription newPressureAdded {
+  newPressureAdded {
+    inchesOfHg
+    timestamp
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class NewPressureAddedGQL extends Apollo.Subscription<NewPressureAddedSubscription, NewPressureAddedSubscriptionVariables> {
+    document = NewPressureAddedDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const RainForLast24HoursDocument = gql`
+    query rainForLast24Hours {
+  rainForLast24Hours {
+    inches
+    timestamp
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class RainForLast24HoursGQL extends Apollo.Query<RainForLast24HoursQuery, RainForLast24HoursQueryVariables> {
+    document = RainForLast24HoursDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const NewRainAddedDocument = gql`
+    subscription newRainAdded {
+  newRainAdded {
+    inches
+    timestamp
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class NewRainAddedGQL extends Apollo.Subscription<NewRainAddedSubscription, NewRainAddedSubscriptionVariables> {
+    document = NewRainAddedDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const TemperatureForLast24HoursDocument = gql`
+    query temperatureForLast24Hours {
+  temperatureForLast24Hours {
     dewPoint
     feelsLike
     heatIndex
-    source
     temp
     timestamp
     windChill
@@ -830,8 +1038,8 @@ export const TemperaturesForLast24HoursDocument = gql`
   @Injectable({
     providedIn: 'root'
   })
-  export class TemperaturesForLast24HoursGQL extends Apollo.Query<TemperaturesForLast24HoursQuery, TemperaturesForLast24HoursQueryVariables> {
-    document = TemperaturesForLast24HoursDocument;
+  export class TemperatureForLast24HoursGQL extends Apollo.Query<TemperatureForLast24HoursQuery, TemperatureForLast24HoursQueryVariables> {
+    document = TemperatureForLast24HoursDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -840,11 +1048,9 @@ export const TemperaturesForLast24HoursDocument = gql`
 export const NewTemperatureAddedDocument = gql`
     subscription newTemperatureAdded {
   newTemperatureAdded {
-    device
     dewPoint
     feelsLike
     heatIndex
-    source
     temp
     timestamp
     windChill
@@ -857,6 +1063,126 @@ export const NewTemperatureAddedDocument = gql`
   })
   export class NewTemperatureAddedGQL extends Apollo.Subscription<NewTemperatureAddedSubscription, NewTemperatureAddedSubscriptionVariables> {
     document = NewTemperatureAddedDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const UvIndexForLast24HoursDocument = gql`
+    query uvIndexForLast24Hours {
+  uvIndexForLast24Hours {
+    value
+    timestamp
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class UvIndexForLast24HoursGQL extends Apollo.Query<UvIndexForLast24HoursQuery, UvIndexForLast24HoursQueryVariables> {
+    document = UvIndexForLast24HoursDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const NewUvIndexAddedDocument = gql`
+    subscription newUvIndexAdded {
+  newUvIndexAdded {
+    value
+    timestamp
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class NewUvIndexAddedGQL extends Apollo.Subscription<NewUvIndexAddedSubscription, NewUvIndexAddedSubscriptionVariables> {
+    document = NewUvIndexAddedDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const WindDirectionForLast24HoursDocument = gql`
+    query windDirectionForLast24Hours {
+  windDirectionForLast24Hours {
+    degrees
+    gust
+    timestamp
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class WindDirectionForLast24HoursGQL extends Apollo.Query<WindDirectionForLast24HoursQuery, WindDirectionForLast24HoursQueryVariables> {
+    document = WindDirectionForLast24HoursDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const NewWindDirectionAddedDocument = gql`
+    subscription newWindDirectionAdded {
+  newWindDirectionAdded {
+    degrees
+    gust
+    timestamp
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class NewWindDirectionAddedGQL extends Apollo.Subscription<NewWindDirectionAddedSubscription, NewWindDirectionAddedSubscriptionVariables> {
+    document = NewWindDirectionAddedDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const WindSpeedForLast24HoursDocument = gql`
+    query windSpeedForLast24Hours {
+  windSpeedForLast24Hours {
+    speed
+    gust
+    average
+    timestamp
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class WindSpeedForLast24HoursGQL extends Apollo.Query<WindSpeedForLast24HoursQuery, WindSpeedForLast24HoursQueryVariables> {
+    document = WindSpeedForLast24HoursDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const NewWindSpeedAddedDocument = gql`
+    subscription newWindSpeedAdded {
+  newWindSpeedAdded {
+    speed
+    gust
+    average
+    timestamp
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class NewWindSpeedAddedGQL extends Apollo.Subscription<NewWindSpeedAddedSubscription, NewWindSpeedAddedSubscriptionVariables> {
+    document = NewWindSpeedAddedDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

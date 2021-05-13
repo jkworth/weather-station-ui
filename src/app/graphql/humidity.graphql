@@ -1,0 +1,13 @@
+query humidityForLast24Hours {
+  humidityForLast24Hours {
+    relative
+    timestamp
+  }
+}
+
+subscription newHumidityAdded {
+  newHumidityAdded {
+    relative
+    timestamp
+  }
+}

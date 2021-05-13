@@ -1,10 +1,8 @@
-query temperaturesForLast24Hours {
-  temperaturesForLast24Hours {
-    device
+query temperatureForLast24Hours {
+  temperatureForLast24Hours {
     dewPoint
     feelsLike
     heatIndex
-    source
     temp
     timestamp
     windChill
@@ -13,11 +11,9 @@ query temperaturesForLast24Hours {
 
 subscription newTemperatureAdded {
   newTemperatureAdded {
-    device
     dewPoint
     feelsLike
     heatIndex
-    source
     temp
     timestamp
     windChill

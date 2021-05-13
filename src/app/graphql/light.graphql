@@ -1,0 +1,15 @@
+query lightForLast24Hours {
+  lightForLast24Hours {
+    intensity
+    seconds
+    timestamp
+  }
+}
+
+subscription newLightAdded {
+  newLightAdded {
+    intensity
+    seconds
+    timestamp
+  }
+}

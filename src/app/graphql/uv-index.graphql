@@ -1,0 +1,13 @@
+query uvIndexForLast24Hours {
+  uvIndexForLast24Hours {
+    value
+    timestamp
+  }
+}
+
+subscription newUvIndexAdded {
+  newUvIndexAdded {
+    value
+    timestamp
+  }
+}

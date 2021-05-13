@@ -4,7 +4,7 @@ documents: 'src/app/graphql/**/*.graphql'
 generates:
   src/generated/graphql.ts:
     config:
-      declarationKind: interface
+      declarationKind: abstract class
     plugins:
       - typescript
       - typescript-operations

@@ -102,13 +102,6 @@ type Humidity {
   timestamp: DateTime!
 }
 
-input HumidityWhereArgs {
-  device: OperatorBase
-  relative: OperatorBase
-  source: OperatorBase
-  timestamp: OperatorBase
-}
-
 type IrisStatus {
   battery: String!
   device: String!
@@ -132,12 +125,6 @@ type Light {
   intensity: Int!
   seconds: Int!
   timestamp: DateTime
-}
-
-input LightWhereArgs {
-  intensity: OperatorBase
-  seconds: OperatorBase
-  timestamp: OperatorBase
 }
 
 type LightningDatum {
@@ -208,29 +195,22 @@ type Pressure {
   timestamp: DateTime!
 }
 
-input PressureWhereArgs {
-  device: OperatorBase
-  inchesOfHg: OperatorBase
-  source: OperatorBase
-  timestamp: OperatorBase
-}
-
 type Query {
   accessStatuses(where: [AccessStatusWhereArgs!]): [AccessStatus!]!
   archives(where: [ArchiveWhereArgs!]): [Archive!]!
   atlasLightnings(where: [AtlasLightningWhereArgs!]): [AtlasLightning!]!
   atlasStatuses(where: [AtlasStatusWhereArgs!]): [AtlasStatus!]!
   dailyRains(where: [DailyRainWhereArgs!]): [DailyRain!]!
-  humidities(where: [HumidityWhereArgs!]): [Humidity!]!
+  humidityForLast24Hours: [Humidity!]!
   irisStatuses(where: [IrisStatusWhereArgs!]): [IrisStatus!]!
+  lightForLast24Hours: [Light!]!
   lightningData(where: [LightningDatumWhereArgs!]): [LightningDatum!]!
-  lights(where: [LightWhereArgs!]): [Light!]!
-  pressures(where: [PressureWhereArgs!]): [Pressure!]!
-  rain(where: [RainWhereArgs!]): [Rain!]!
-  temperaturesForLast24Hours: [Temperature!]!
-  uvIndexes(where: [UVIndexWhereArgs!]): [UVIndex!]!
-  windDirections(where: [WindDirectionWhereArgs!]): [WindDirection!]!
-  windSpeeds(where: [WindSpeedWhereArgs!]): [WindSpeed!]!
+  pressureForLast24Hours: [Pressure!]!
+  rainForLast24Hours: [Rain!]!
+  temperatureForLast24Hours: [Temperature!]!
+  uvIndexForLast24Hours: [UvIndex!]!
+  windDirectionForLast24Hours: [WindDirection!]!
+  windSpeedForLast24Hours: [WindSpeed!]!
 }
 
 type Rain {
@@ -238,13 +218,6 @@ type Rain {
   inches: Float!
   source: String!
   timestamp: DateTime!
-}
-
-input RainWhereArgs {
-  device: OperatorBase
-  inches: OperatorBase
-  source: OperatorBase
-  timestamp: OperatorBase
 }
 
 type Subscription {
@@ -260,7 +233,7 @@ type Subscription {
   newPressureAdded: Pressure!
   newRainAdded: Rain!
   newTemperatureAdded: Temperature!
-  newUVIndexAdded: UVIndex!
+  newUvIndexAdded: UvIndex!
   newWindDirectionAdded: WindDirection!
   newWindSpeedAdded: WindSpeed!
 }
@@ -276,14 +249,9 @@ type Temperature {
   windChill: Float
 }
 
-type UVIndex {
+type UvIndex {
   timestamp: DateTime!
   value: Int!
-}
-
-input UVIndexWhereArgs {
-  timestamp: OperatorBase
-  value: OperatorBase
 }
 
 type WindDirection {
@@ -294,14 +262,6 @@ type WindDirection {
   timestamp: DateTime!
 }
 
-input WindDirectionWhereArgs {
-  degrees: OperatorBase
-  device: OperatorBase
-  gust: OperatorBase
-  source: OperatorBase
-  timestamp: OperatorBase
-}
-
 type WindSpeed {
   average: Float
   device: String!
@@ -309,13 +269,4 @@ type WindSpeed {
   source: String!
   speed: Float!
   timestamp: DateTime!
-}
-
-input WindSpeedWhereArgs {
-  average: OperatorBase
-  device: OperatorBase
-  gust: OperatorBase
-  source: OperatorBase
-  speed: OperatorBase
-  timestamp: OperatorBase
 }

@@ -4,9 +4,8 @@ import * as am4core from '@amcharts/amcharts4/core';
 import { Color, NumberFormatter } from '@amcharts/amcharts4/core';
 import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, Inject, NgZone, OnDestroy, ViewChild } from '@angular/core';
-import { tz } from 'moment-timezone';
 import { Subscription } from 'rxjs';
-import { ArchiveEntity } from '../../entities';
+// import { ArchiveEntity } from '../../entities';
 
 @Component({
   selector: 'wx-temporal-line-chart',
@@ -54,37 +53,37 @@ export class TemporalLineChartComponent implements AfterViewInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
-  private updateData(archives: ArchiveEntity[]) {
-    if (!Array.isArray(archives)) {
-      return;
-    }
+  // private updateData(archives: ArchiveEntity[]) {
+  //   if (!Array.isArray(archives)) {
+  //     return;
+  //   }
 
-    this.zone.runOutsideAngular(() => {
-      // Add data
-      const lastEntry = (this.chart.data as ArchiveEntity[])[this.chart.data.length - 1]?.dateTime || 0;
-      const newArchives = archives.filter((archive) => archive.dateTime > lastEntry);
+  //   this.zone.runOutsideAngular(() => {
+  //     // Add data
+  //     const lastEntry = (this.chart.data as ArchiveEntity[])[this.chart.data.length - 1]?.dateTime || 0;
+  //     const newArchives = archives.filter((archive) => archive.dateTime > lastEntry);
 
-      if (newArchives.length === 0) {
-        return;
-      }
+  //     if (newArchives.length === 0) {
+  //       return;
+  //     }
 
-      let removeCount = 0;
+  //     let removeCount = 0;
 
-      if (this.chart.data.length + newArchives.length > archives.length) {
-        removeCount = this.chart.data.length + newArchives.length - archives.length;
-      }
+  //     if (this.chart.data.length + newArchives.length > archives.length) {
+  //       removeCount = this.chart.data.length + newArchives.length - archives.length;
+  //     }
 
-      this.chart.addData(
-        newArchives.map((archive) => {
-          return {
-            ...archive,
-            dateTime: tz(archive.dateTime, archive.stationTimezone).toDate()
-          };
-        }),
-        removeCount
-      );
-    });
-  }
+  //     this.chart.addData(
+  //       newArchives.map((archive) => {
+  //         return {
+  //           ...archive,
+  //           dateTime: tz(archive.dateTime, archive.stationTimezone).toDate()
+  //         };
+  //       }),
+  //       removeCount
+  //     );
+  //   });
+  // }
 
   private setupChart() {
     this.zone.runOutsideAngular(() => {

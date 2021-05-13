@@ -1076,65 +1076,6 @@
         "possibleTypes": null
       },
       {
-        "kind": "INPUT_OBJECT",
-        "name": "HumidityWhereArgs",
-        "description": null,
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "device",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "OperatorBase",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "relative",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "OperatorBase",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "source",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "OperatorBase",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "timestamp",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "OperatorBase",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
         "kind": "OBJECT",
         "name": "IrisStatus",
         "description": null,
@@ -1330,53 +1271,6 @@
         ],
         "inputFields": null,
         "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "LightWhereArgs",
-        "description": null,
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "intensity",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "OperatorBase",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "seconds",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "OperatorBase",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "timestamp",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "OperatorBase",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -1753,65 +1647,6 @@
         "possibleTypes": null
       },
       {
-        "kind": "INPUT_OBJECT",
-        "name": "PressureWhereArgs",
-        "description": null,
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "device",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "OperatorBase",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "inchesOfHg",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "OperatorBase",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "source",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "OperatorBase",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "timestamp",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "OperatorBase",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
         "kind": "OBJECT",
         "name": "Query",
         "description": null,
@@ -2042,30 +1877,9 @@
             "deprecationReason": null
           },
           {
-            "name": "humidities",
+            "name": "humidityForLast24Hours",
             "description": null,
-            "args": [
-              {
-                "name": "where",
-                "description": null,
-                "type": {
-                  "kind": "LIST",
-                  "name": null,
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "HumidityWhereArgs",
-                      "ofType": null
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
+            "args": [],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -2132,6 +1946,30 @@
             "deprecationReason": null
           },
           {
+            "name": "lightForLast24Hours",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "Light",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "lightningData",
             "description": null,
             "args": [
@@ -2177,75 +2015,9 @@
             "deprecationReason": null
           },
           {
-            "name": "lights",
+            "name": "pressureForLast24Hours",
             "description": null,
-            "args": [
-              {
-                "name": "where",
-                "description": null,
-                "type": {
-                  "kind": "LIST",
-                  "name": null,
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "LightWhereArgs",
-                      "ofType": null
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "Light",
-                    "ofType": null
-                  }
-                }
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "pressures",
-            "description": null,
-            "args": [
-              {
-                "name": "where",
-                "description": null,
-                "type": {
-                  "kind": "LIST",
-                  "name": null,
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "PressureWhereArgs",
-                      "ofType": null
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
+            "args": [],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -2267,30 +2039,9 @@
             "deprecationReason": null
           },
           {
-            "name": "rain",
+            "name": "rainForLast24Hours",
             "description": null,
-            "args": [
-              {
-                "name": "where",
-                "description": null,
-                "type": {
-                  "kind": "LIST",
-                  "name": null,
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "RainWhereArgs",
-                      "ofType": null
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
+            "args": [],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -2312,7 +2063,7 @@
             "deprecationReason": null
           },
           {
-            "name": "temperaturesForLast24Hours",
+            "name": "temperatureForLast24Hours",
             "description": null,
             "args": [],
             "type": {
@@ -2336,30 +2087,9 @@
             "deprecationReason": null
           },
           {
-            "name": "uvIndexes",
+            "name": "uvIndexForLast24Hours",
             "description": null,
-            "args": [
-              {
-                "name": "where",
-                "description": null,
-                "type": {
-                  "kind": "LIST",
-                  "name": null,
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "UVIndexWhereArgs",
-                      "ofType": null
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
+            "args": [],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -2371,7 +2101,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "UVIndex",
+                    "name": "UvIndex",
                     "ofType": null
                   }
                 }
@@ -2381,30 +2111,9 @@
             "deprecationReason": null
           },
           {
-            "name": "windDirections",
+            "name": "windDirectionForLast24Hours",
             "description": null,
-            "args": [
-              {
-                "name": "where",
-                "description": null,
-                "type": {
-                  "kind": "LIST",
-                  "name": null,
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "WindDirectionWhereArgs",
-                      "ofType": null
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
+            "args": [],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -2426,30 +2135,9 @@
             "deprecationReason": null
           },
           {
-            "name": "windSpeeds",
+            "name": "windSpeedForLast24Hours",
             "description": null,
-            "args": [
-              {
-                "name": "where",
-                "description": null,
-                "type": {
-                  "kind": "LIST",
-                  "name": null,
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "WindSpeedWhereArgs",
-                      "ofType": null
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
+            "args": [],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -2548,65 +2236,6 @@
         ],
         "inputFields": null,
         "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "RainWhereArgs",
-        "description": null,
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "device",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "OperatorBase",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "inches",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "OperatorBase",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "source",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "OperatorBase",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "timestamp",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "OperatorBase",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -2808,7 +2437,7 @@
             "deprecationReason": null
           },
           {
-            "name": "newUVIndexAdded",
+            "name": "newUvIndexAdded",
             "description": null,
             "args": [],
             "type": {
@@ -2816,7 +2445,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "UVIndex",
+                "name": "UvIndex",
                 "ofType": null
               }
             },
@@ -2986,7 +2615,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "UVIndex",
+        "name": "UvIndex",
         "description": null,
         "fields": [
           {
@@ -3024,41 +2653,6 @@
         ],
         "inputFields": null,
         "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "UVIndexWhereArgs",
-        "description": null,
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "timestamp",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "OperatorBase",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "value",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "OperatorBase",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -3146,77 +2740,6 @@
         ],
         "inputFields": null,
         "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "WindDirectionWhereArgs",
-        "description": null,
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "degrees",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "OperatorBase",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "device",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "OperatorBase",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "gust",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "OperatorBase",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "source",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "OperatorBase",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "timestamp",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "OperatorBase",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -3316,89 +2839,6 @@
         ],
         "inputFields": null,
         "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "WindSpeedWhereArgs",
-        "description": null,
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "average",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "OperatorBase",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "device",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "OperatorBase",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "gust",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "OperatorBase",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "source",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "OperatorBase",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "speed",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "OperatorBase",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "timestamp",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "OperatorBase",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },

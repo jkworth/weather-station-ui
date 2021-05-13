@@ -1,0 +1,17 @@
+query windSpeedForLast24Hours {
+  windSpeedForLast24Hours {
+    speed
+    gust
+    average
+    timestamp
+  }
+}
+
+subscription newWindSpeedAdded {
+  newWindSpeedAdded {
+    speed
+    gust
+    average
+    timestamp
+  }
+}

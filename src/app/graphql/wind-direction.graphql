@@ -1,0 +1,15 @@
+query windDirectionForLast24Hours {
+  windDirectionForLast24Hours {
+    degrees
+    gust
+    timestamp
+  }
+}
+
+subscription newWindDirectionAdded {
+  newWindDirectionAdded {
+    degrees
+    gust
+    timestamp
+  }
+}

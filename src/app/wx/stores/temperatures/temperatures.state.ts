@@ -1,14 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Action, State, StateContext, StateToken } from '@ngxs/store';
-import produce from 'immer';
-import { NewTemperatureAddedGQL, Temperature, TemperaturesForLast24HoursGQL } from 'src/generated/graphql';
-import { GetTemperaturesForLast24Hours, SubscribeToNewTemperatures } from './temperatures.actions';
+import { NewTemperatureAddedGQL, Temperature, TemperatureForLast24HoursGQL } from 'src/generated/graphql';
+import { WxBaseState, WxBaseStateModel } from '../wx-base/wx-base.state';
 
-export interface TemperatureStateModel {
-  records: Temperature[];
+export interface TemperatureStateModel extends WxBaseStateModel<Temperature> {}
+
+export const TEMPERATURE_STATE_TOKEN = new StateToken<TemperatureStateModel>('Temperature');
+
+export class GetTemperatureForLast24Hours {
+  static readonly type = '[Temperature] Get records for last 24 hours';
 }
 
-export const TEMPERATURE_STATE_TOKEN = new StateToken<TemperatureStateModel>('temperature');
+export class SubscribeToNewTemperature {
+  static readonly type = '[Temperature] Get new records as they are logged';
+}
 
 @State<TemperatureStateModel>({
   name: TEMPERATURE_STATE_TOKEN,
@@ -17,32 +22,18 @@ export const TEMPERATURE_STATE_TOKEN = new StateToken<TemperatureStateModel>('te
   }
 })
 @Injectable()
-export class TemperatureState {
-  constructor(
-    private temperaturesForLast24HoursGql: TemperaturesForLast24HoursGQL,
-    private newTemperatureAddedGql: NewTemperatureAddedGQL
-  ) {}
-
-  @Action(GetTemperaturesForLast24Hours, { cancelUncompleted: true })
-  getTemperaturesForLast24Hours(ctx: StateContext<TemperatureStateModel>): void {
-    this.temperaturesForLast24HoursGql.fetch().subscribe((response) => {
-      ctx.setState(
-        produce((draft: TemperatureStateModel) => {
-          draft.records = response.data.temperaturesForLast24Hours;
-        })
-      );
-    });
+export class TemperatureState extends WxBaseState<Temperature> {
+  constructor(last24HoursGql: TemperatureForLast24HoursGQL, addedGql: NewTemperatureAddedGQL) {
+    super(last24HoursGql, addedGql, Temperature.name);
   }
 
-  @Action(SubscribeToNewTemperatures, { cancelUncompleted: true })
-  getNewTemperatures(ctx: StateContext<TemperatureStateModel>): void {
-    this.newTemperatureAddedGql.subscribe().subscribe((response) => {
-      ctx.setState(
-        produce((draft: TemperatureStateModel) => {
-          draft.records.pop();
-          draft.records = [...draft.records, response.data.newTemperatureAdded];
-        })
-      );
-    });
+  @Action(GetTemperatureForLast24Hours, { cancelUncompleted: true })
+  loadTemperaturesForLast24Hours(ctx: StateContext<TemperatureStateModel>): void {
+    this.loadLast24Hours(ctx);
+  }
+
+  @Action(SubscribeToNewTemperature, { cancelUncompleted: true })
+  subscribeToNewTemperatures(ctx: StateContext<TemperatureStateModel>): void {
+    this.subscribeToNewRecords(ctx);
   }
 }
