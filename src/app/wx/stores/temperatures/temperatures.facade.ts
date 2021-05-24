@@ -11,12 +11,12 @@ export class TemperatureFacade {
   constructor(private store: Store) {}
 
   @Select(TemperatureState.records<Temperature>())
-  private values$: Observable<Temperature[]>;
+  private _values$: Observable<Temperature[]>;
 
-  get temperatures$(): Observable<Temperature[]> {
+  get values$(): Observable<Temperature[]> {
     this.store.dispatch(new GetTemperatureForLast24Hours());
     this.store.dispatch(new SubscribeToNewTemperature());
 
-    return this.values$;
+    return this._values$;
   }
 }

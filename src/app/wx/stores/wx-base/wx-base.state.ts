@@ -29,6 +29,7 @@ export class WxBaseState<T> {
     this.retrieved24Hours = true;
 
     this.last24HoursGql.fetch().subscribe((response) => {
+      console.log(`24hrs of ${this.pascalCaseTypeName} loaded`);
       ctx.setState(
         produce((draft: WritableDraft<WxBaseStateModel<T>>) => {
           draft.records = response.data[`${this.camelCaseTypeName}ForLast24Hours`];
@@ -43,10 +44,11 @@ export class WxBaseState<T> {
     this.subscribedToChanges = true;
 
     this.newRecordAddedGql.subscribe().subscribe((response) => {
+      console.log(`new ${this.pascalCaseTypeName} added`);
       ctx.setState(
         produce((draft: WritableDraft<WxBaseStateModel<T>>) => {
           draft.records.pop();
-          draft.records = [...draft.records, response.data[`new${this.pascalCaseTypeName}TemperatureAdded`]];
+          draft.records = [...draft.records, response.data[`new${this.pascalCaseTypeName}Added`]];
         })
       );
     });

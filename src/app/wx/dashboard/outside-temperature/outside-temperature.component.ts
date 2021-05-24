@@ -4,15 +4,9 @@ import * as am4core from '@amcharts/amcharts4/core';
 import { Label } from '@amcharts/amcharts4/core';
 import { AfterViewInit, Component, ElementRef, HostListener, NgZone, OnDestroy, ViewChild } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { Temperature } from 'src/generated/graphql';
+import { Humidity, Temperature } from 'src/generated/graphql';
 import { HumidityFacade } from '../../stores/humidity/humidity.facade';
-import { LightFacade } from '../../stores/light/light.facade';
-import { PressureFacade } from '../../stores/pressure/pressure.facade';
-import { RainFacade } from '../../stores/rain/rain.facade';
 import { TemperatureFacade } from '../../stores/temperatures/temperatures.facade';
-import { UvIndexFacade } from '../../stores/uv-index/uv-index.facade';
-import { WindDirectionFacade } from '../../stores/wind-direction/wind-direction.facade';
-import { WindSpeedFacade } from '../../stores/wind-speed/wind-speed.facade';
 
 @Component({
   selector: 'wx-outside-temperature',
@@ -33,13 +27,7 @@ export class OutsideTemperatureComponent implements AfterViewInit, OnDestroy {
   constructor(
     private zone: NgZone,
     private humidityFacade: HumidityFacade,
-    private lightFacade: LightFacade,
-    private pressureFacade: PressureFacade,
-    private rainFacade: RainFacade,
-    private temperaturesFacade: TemperatureFacade,
-    private uvIndexFacade: UvIndexFacade,
-    private windDirectionFacade: WindDirectionFacade,
-    private windSpeedFacade: WindSpeedFacade
+    private temperaturesFacade: TemperatureFacade
   ) {}
 
   ngAfterViewInit(): void {
@@ -53,19 +41,18 @@ export class OutsideTemperatureComponent implements AfterViewInit, OnDestroy {
       this.setupFeelLikeLabel();
     });
 
-    this.humidityFacade.values$.subscribe(() => {});
-    this.lightFacade.values$.subscribe(() => {});
-    this.pressureFacade.values$.subscribe(() => {});
-    this.rainFacade.values$.subscribe(() => {});
-    this.uvIndexFacade.values$.subscribe(() => {});
-    this.windDirectionFacade.values$.subscribe(() => {});
-    this.windSpeedFacade.values$.subscribe(() => {});
-
-    this.temperaturesFacade.temperatures$.pipe(map((temps) => temps.slice(-1)[0])).subscribe((temp: Temperature) => {
-      if (!temp) {
+    this.temperaturesFacade.values$.pipe(map((value) => value.slice(-1)[0])).subscribe((value: Temperature) => {
+      if (!value) {
         return;
       }
-      this.handleDataUpdates(temp);
+      this.handleTemperatureDataUpdates(value);
+    });
+
+    this.humidityFacade.values$.pipe(map((temps) => temps.slice(-1)[0])).subscribe((value: Humidity) => {
+      if (!value) {
+        return;
+      }
+      this.handleHumidityDataUpdates(value);
     });
   }
 
@@ -82,12 +69,17 @@ export class OutsideTemperatureComponent implements AfterViewInit, OnDestroy {
     this.chart.deepInvalidate();
   }
 
-  private handleDataUpdates(temp: Temperature) {
+  private handleTemperatureDataUpdates(temp: Temperature) {
     this.zone.runOutsideAngular(() => {
       this.hand.showValue(temp.temp, 1000, am4core.ease.cubicInOut);
       this.tempLabel.text = Math.round(temp.temp).toString();
-      this.humidityLabel.text = `${Math.round(temp.windChill).toString()}`;
       this.feelsLikeLabel.text = `${Math.round(temp.feelsLike).toString()}`;
+    });
+  }
+
+  private handleHumidityDataUpdates(temp: Humidity) {
+    this.zone.runOutsideAngular(() => {
+      this.humidityLabel.text = `${Math.round(temp.relative).toString()}%`;
     });
   }
 
@@ -193,7 +185,7 @@ export class OutsideTemperatureComponent implements AfterViewInit, OnDestroy {
     valueTypeLabel.horizontalCenter = 'middle';
     valueTypeLabel.verticalCenter = 'middle';
     valueTypeLabel.fill = am4core.color('#1eaaf1');
-    valueTypeLabel.text = 'Wind Chill';
+    valueTypeLabel.text = 'Humidity';
   }
 
   private setupFeelLikeLabel() {
