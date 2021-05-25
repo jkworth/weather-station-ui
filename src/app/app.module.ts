@@ -32,11 +32,11 @@ import { WxModule } from './wx/wx.module';
       useFactory: (httpLink: HttpLink) => {
         const host = `${environment.API_HOST}:${environment.API_PORT}`;
         const http = httpLink.create({
-          uri: `http://${host}/graphql`
+          uri: `https://${host}/graphql`
         });
 
         const ws = new WebSocketLink({
-          uri: `ws://${host}/graphql`,
+          uri: `wss://${host}/graphql`,
           options: {
             reconnect: true
           }
