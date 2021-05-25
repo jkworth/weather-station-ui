@@ -66,7 +66,15 @@ export class WxBaseState<T> {
       ctx.setState(
         produce((draft: WritableDraft<WxBaseStateModel<T>>) => {
           draft.records.shift();
-          let records = [...draft.records, response.data[`new${this.pascalCaseTypeName}Added`]];
+
+          let records = [response.data[`new${this.pascalCaseTypeName}Added`]];
+          records.forEach((record) => {
+            if (record.hasOwnProperty('timestamp')) {
+              record['timestamp'] = new Date(Date.parse(record['timestamp']));
+            }
+          });
+          records = [...draft.records, ...records];
+
           const newIndex = records.length - 1;
           if (preProcessor) {
             records[newIndex] = preProcessor(records[newIndex], newIndex, records);

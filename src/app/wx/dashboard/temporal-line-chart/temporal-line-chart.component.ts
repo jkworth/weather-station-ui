@@ -45,7 +45,16 @@ export class TemporalLineChartComponent implements AfterViewInit, OnDestroy {
     }
 
     this.zone.runOutsideAngular(() => {
-      this.chart.addData(archives, this.chart.data.length);
+      let numberOfItemsToRemove = this.chart.data.length;
+
+      if (this.chart.data.length > 0) {
+        archives = archives.filter(
+          (archive) => archive.timestamp > this.chart.data[this.chart.data.length - 1].timestamp
+        );
+        numberOfItemsToRemove = archives.length;
+      }
+
+      this.chart.addData(archives, numberOfItemsToRemove);
     });
   }
 
