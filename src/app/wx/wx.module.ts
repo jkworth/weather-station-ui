@@ -10,7 +10,7 @@ import { stores } from './stores';
 
 @NgModule({
   imports: [
-    NgxsModule.forRoot([...stores]),
+    NgxsModule.forRoot([...stores], { developmentMode: !environment.production }),
     !environment.production ? NgxsLoggerPluginModule.forRoot() : [],
     HttpClientModule
   ],

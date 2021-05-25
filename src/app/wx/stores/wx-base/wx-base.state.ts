@@ -23,22 +23,40 @@ export class WxBaseState<T> {
     });
   }
 
-  protected loadLast24Hours(ctx: StateContext<WxBaseStateModel<T>>): void {
+  protected loadLast24Hours(ctx: StateContext<WxBaseStateModel<T>>, preProcessor?: (records: T[]) => T[]): void {
     if (this.retrieved24Hours) return;
 
     this.retrieved24Hours = true;
 
     this.last24HoursGql.fetch().subscribe((response) => {
       console.log(`24hrs of ${this.pascalCaseTypeName} loaded`);
+
       ctx.setState(
         produce((draft: WritableDraft<WxBaseStateModel<T>>) => {
-          draft.records = response.data[`${this.camelCaseTypeName}ForLast24Hours`];
+          let records = response.data[`${this.camelCaseTypeName}ForLast24Hours`].map((record) => ({
+            ...record
+          }));
+
+          records.forEach((record) => {
+            if (record.hasOwnProperty('timestamp')) {
+              record['timestamp'] = new Date(Date.parse(record['timestamp']));
+            }
+          });
+
+          if (preProcessor) {
+            records = preProcessor(records);
+          }
+
+          draft.records = records;
         })
       );
     });
   }
 
-  protected subscribeToNewRecords(ctx: StateContext<WxBaseStateModel<T>>): void {
+  protected subscribeToNewRecords(
+    ctx: StateContext<WxBaseStateModel<T>>,
+    preProcessor?: (record: T, index: number, records: T[]) => T
+  ): void {
     if (this.subscribedToChanges) return;
 
     this.subscribedToChanges = true;
@@ -47,8 +65,13 @@ export class WxBaseState<T> {
       console.log(`new ${this.pascalCaseTypeName} added`);
       ctx.setState(
         produce((draft: WritableDraft<WxBaseStateModel<T>>) => {
-          draft.records.pop();
-          draft.records = [...draft.records, response.data[`new${this.pascalCaseTypeName}Added`]];
+          draft.records.shift();
+          let records = [...draft.records, response.data[`new${this.pascalCaseTypeName}Added`]];
+          const newIndex = records.length - 1;
+          if (preProcessor) {
+            records[newIndex] = preProcessor(records[newIndex], newIndex, records);
+          }
+          draft.records = records;
         })
       );
     });

@@ -1,3 +1,4 @@
+import { ArchiveState } from './archive/archive-store.state';
 import { HumidityState } from './humidity/humidity.state';
 import { LightState } from './light/Light.state';
 import { PressureState } from './pressure/Pressure.state';
@@ -8,6 +9,7 @@ import { WindDirectionState } from './wind-direction/wind-direction.state';
 import { WindSpeedState } from './wind-speed/wind-speed.state';
 
 export const stores = [
+  ArchiveState,
   HumidityState,
   LightState,
   PressureState,

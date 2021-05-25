@@ -2,10 +2,10 @@ import * as am4charts from '@amcharts/amcharts4/charts';
 import { DateAxis, Legend, ValueAxis, XYChart, XYCursor, XYSeries } from '@amcharts/amcharts4/charts';
 import * as am4core from '@amcharts/amcharts4/core';
 import { Color, NumberFormatter } from '@amcharts/amcharts4/core';
-import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, Inject, NgZone, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, NgZone, OnDestroy, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-// import { ArchiveEntity } from '../../entities';
+import { Archive } from 'src/generated/graphql';
+import { ArchiveFacade } from '../../stores/archive/archive-store.facade';
 
 @Component({
   selector: 'wx-temporal-line-chart',
@@ -16,31 +16,17 @@ export class TemporalLineChartComponent implements AfterViewInit, OnDestroy {
   @ViewChild('displayElement')
   displayEleRef: ElementRef;
 
-  // @Select(ARCHIVE_STATE_TOKEN)
-  // archives$: Observable<ArchiveStateModel>;
-
   private chart: am4charts.XYChart;
-  private dateAxis: DateAxis;
   private rainAxis: ValueAxis;
 
   private subscriptions = new Subscription();
 
-  constructor(@Inject(DOCUMENT) private document: Document, private zone: NgZone) {}
+  constructor(private zone: NgZone, private archiveFacade: ArchiveFacade) {}
 
   ngAfterViewInit(): void {
     this.setupChart();
 
-    // this.subscriptions.add(
-    //   this.archives$
-    //     .pipe(
-    //       map((archives) => {
-    //         return archives.records;
-    //       })
-    //     )
-    //     .subscribe((archives: ArchiveEntity[]) => {
-    //       this.updateData(archives);
-    //     })
-    // );
+    this.archiveFacade.values$.subscribe(this.updateData.bind(this));
   }
 
   ngOnDestroy(): void {
@@ -53,37 +39,15 @@ export class TemporalLineChartComponent implements AfterViewInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
-  // private updateData(archives: ArchiveEntity[]) {
-  //   if (!Array.isArray(archives)) {
-  //     return;
-  //   }
+  private updateData(archives: Archive[]) {
+    if (!Array.isArray(archives)) {
+      return;
+    }
 
-  //   this.zone.runOutsideAngular(() => {
-  //     // Add data
-  //     const lastEntry = (this.chart.data as ArchiveEntity[])[this.chart.data.length - 1]?.dateTime || 0;
-  //     const newArchives = archives.filter((archive) => archive.dateTime > lastEntry);
-
-  //     if (newArchives.length === 0) {
-  //       return;
-  //     }
-
-  //     let removeCount = 0;
-
-  //     if (this.chart.data.length + newArchives.length > archives.length) {
-  //       removeCount = this.chart.data.length + newArchives.length - archives.length;
-  //     }
-
-  //     this.chart.addData(
-  //       newArchives.map((archive) => {
-  //         return {
-  //           ...archive,
-  //           dateTime: tz(archive.dateTime, archive.stationTimezone).toDate()
-  //         };
-  //       }),
-  //       removeCount
-  //     );
-  //   });
-  // }
+    this.zone.runOutsideAngular(() => {
+      this.chart.addData(archives, this.chart.data.length);
+    });
+  }
 
   private setupChart() {
     this.zone.runOutsideAngular(() => {
@@ -104,19 +68,19 @@ export class TemporalLineChartComponent implements AfterViewInit, OnDestroy {
   private createTemperatureAxis(): void {
     const format = '#.0';
     const tempValueAxis = this.createValueAxis(am4core.color('rgba(255,0,0,0.85)'), format);
-    const dewpointValueAxis = this.createValueAxis(am4core.color('#005000'), format);
-    dewpointValueAxis.renderer.labels.template.disabled = true;
-    dewpointValueAxis.renderer.line.paddingLeft = 4;
+    const dewPointValueAxis = this.createValueAxis(am4core.color('#005000'), format);
+    dewPointValueAxis.renderer.labels.template.disabled = true;
+    dewPointValueAxis.renderer.line.paddingLeft = 4;
 
-    this.createSeries('Temp (°F)', 'outsideTemperature', am4core.color('rgba(255,0,0,0.85)'), format, tempValueAxis);
-    this.createSeries(`Dew Point (°F)`, 'dewPoint', am4core.color('#005000'), format, tempValueAxis);
+    this.createSeries('Temp (°F)', 'tempF', am4core.color('rgba(255,0,0,0.85)'), format, tempValueAxis);
+    this.createSeries(`Dew Point (°F)`, 'dewPointF', am4core.color('#005000'), format, tempValueAxis);
   }
 
   private createPressureAxis(): void {
     const format = '#.00';
     const color = am4core.color('#797979');
     const valueAxis = this.createValueAxis(color, format, true);
-    this.createSeries('Pressure (inHg)', 'pressure', color, format, valueAxis);
+    this.createSeries('Pressure (inHg)', 'pressureinHg', color, format, valueAxis);
   }
 
   private createRainAxis(): void {
@@ -126,7 +90,7 @@ export class TemporalLineChartComponent implements AfterViewInit, OnDestroy {
     this.rainAxis = this.createValueAxis(color, format, true);
     this.rainAxis.min = 0;
 
-    const series = this.createSeries('Rain (in)', 'rainAccumulation', color, format, this.rainAxis);
+    const series = this.createSeries('Rain (in/hr)', 'rainIn', color, format, this.rainAxis);
     series.fillOpacity = 0.25;
     series.fill = color;
   }
@@ -140,8 +104,6 @@ export class TemporalLineChartComponent implements AfterViewInit, OnDestroy {
     dateAxis.cursorTooltipEnabled = false;
     dateAxis.renderer.labels.template.fontSize = 12;
     dateAxis.groupData = true;
-
-    this.dateAxis = dateAxis;
   }
 
   private setupCursor(): void {
@@ -163,7 +125,7 @@ export class TemporalLineChartComponent implements AfterViewInit, OnDestroy {
   private createSeries(label: string, fieldName: string, color: Color, format: string, valueAxis: ValueAxis): XYSeries {
     const series = this.chart.series.push(new am4charts.LineSeries());
     series.dataFields.valueY = fieldName;
-    series.dataFields.dateX = 'dateTime';
+    series.dataFields.dateX = 'timestamp';
     series.yAxis = valueAxis;
     series.name = label;
     series.tooltipText = '{valueY}';

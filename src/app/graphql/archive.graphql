@@ -1,0 +1,19 @@
+query archiveForLast24Hours {
+  archiveForLast24Hours {
+    dewPointF
+    pressureinHg
+    rainIn
+    tempF
+    timestamp
+  }
+}
+
+subscription newArchiveAdded {
+  newArchiveAdded {
+    dewPointF
+    pressureinHg
+    rainIn
+    tempF
+    timestamp
+  }
+}

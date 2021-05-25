@@ -54,26 +54,6 @@ export abstract class Archive {
   windSpeedMphAvg?: Maybe<Scalars['Float']>;
 };
 
-export abstract class ArchiveWhereArgs {
-  dewPointF?: Maybe<OperatorBase>;
-  feelsF?: Maybe<OperatorBase>;
-  light?: Maybe<OperatorBase>;
-  lightSeconds?: Maybe<OperatorBase>;
-  lightning?: Maybe<OperatorBase>;
-  pressureinHg?: Maybe<OperatorBase>;
-  rainIn?: Maybe<OperatorBase>;
-  relH?: Maybe<OperatorBase>;
-  tempF?: Maybe<OperatorBase>;
-  timestamp?: Maybe<OperatorBase>;
-  totalRainIn?: Maybe<OperatorBase>;
-  uvIndex?: Maybe<OperatorBase>;
-  windDeg?: Maybe<OperatorBase>;
-  windGustDeg?: Maybe<OperatorBase>;
-  windGustMph?: Maybe<OperatorBase>;
-  windSpeedMph?: Maybe<OperatorBase>;
-  windSpeedMphAvg?: Maybe<OperatorBase>;
-};
-
 export abstract class AtlasLightning {
   __typename?: 'AtlasLightning';
   currentStrikes: Scalars['Int'];
@@ -204,7 +184,7 @@ export abstract class Pressure {
 export abstract class Query {
   __typename?: 'Query';
   accessStatuses: Array<AccessStatus>;
-  archives: Array<Archive>;
+  archiveForLast24Hours: Array<Archive>;
   atlasLightnings: Array<AtlasLightning>;
   atlasStatuses: Array<AtlasStatus>;
   dailyRains: Array<DailyRain>;
@@ -223,11 +203,6 @@ export abstract class Query {
 
 export abstract class QueryAccessStatusesArgs {
   where?: Maybe<Array<AccessStatusWhereArgs>>;
-};
-
-
-export abstract class QueryArchivesArgs {
-  where?: Maybe<Array<ArchiveWhereArgs>>;
 };
 
 
@@ -318,6 +293,28 @@ export abstract class WindSpeed {
   speed: Scalars['Float'];
   timestamp: Scalars['DateTime'];
 };
+
+export type ArchiveForLast24HoursQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ArchiveForLast24HoursQuery = (
+  { __typename?: 'Query' }
+  & { archiveForLast24Hours: Array<(
+    { __typename?: 'Archive' }
+    & Pick<Archive, 'dewPointF' | 'pressureinHg' | 'rainIn' | 'tempF' | 'timestamp'>
+  )> }
+);
+
+export type NewArchiveAddedSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type NewArchiveAddedSubscription = (
+  { __typename?: 'Subscription' }
+  & { newArchiveAdded: (
+    { __typename?: 'Archive' }
+    & Pick<Archive, 'dewPointF' | 'pressureinHg' | 'rainIn' | 'tempF' | 'timestamp'>
+  ) }
+);
 
 export type HumidityForLast24HoursQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -579,7 +576,6 @@ export type ResolversTypes = {
   Archive: ResolverTypeWrapper<Archive>;
   Float: ResolverTypeWrapper<Scalars['Float']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
-  ArchiveWhereArgs: ArchiveWhereArgs;
   AtlasLightning: ResolverTypeWrapper<AtlasLightning>;
   AtlasLightningWhereArgs: AtlasLightningWhereArgs;
   AtlasStatus: ResolverTypeWrapper<AtlasStatus>;
@@ -614,7 +610,6 @@ export type ResolversParentTypes = {
   Archive: Archive;
   Float: Scalars['Float'];
   Int: Scalars['Int'];
-  ArchiveWhereArgs: ArchiveWhereArgs;
   AtlasLightning: AtlasLightning;
   AtlasLightningWhereArgs: AtlasLightningWhereArgs;
   AtlasStatus: AtlasStatus;
@@ -750,7 +745,7 @@ export type PressureResolvers<ContextType = any, ParentType extends ResolversPar
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   accessStatuses?: Resolver<Array<ResolversTypes['AccessStatus']>, ParentType, ContextType, RequireFields<QueryAccessStatusesArgs, never>>;
-  archives?: Resolver<Array<ResolversTypes['Archive']>, ParentType, ContextType, RequireFields<QueryArchivesArgs, never>>;
+  archiveForLast24Hours?: Resolver<Array<ResolversTypes['Archive']>, ParentType, ContextType>;
   atlasLightnings?: Resolver<Array<ResolversTypes['AtlasLightning']>, ParentType, ContextType, RequireFields<QueryAtlasLightningsArgs, never>>;
   atlasStatuses?: Resolver<Array<ResolversTypes['AtlasStatus']>, ParentType, ContextType, RequireFields<QueryAtlasStatusesArgs, never>>;
   dailyRains?: Resolver<Array<ResolversTypes['DailyRain']>, ParentType, ContextType, RequireFields<QueryDailyRainsArgs, never>>;
@@ -868,6 +863,50 @@ export type DirectiveResolvers<ContextType = any> = {
  * Use "DirectiveResolvers" root object instead. If you wish to get "IDirectiveResolvers", add "typesPrefix: I" to your config.
  */
 export type IDirectiveResolvers<ContextType = any> = DirectiveResolvers<ContextType>;
+export const ArchiveForLast24HoursDocument = gql`
+    query archiveForLast24Hours {
+  archiveForLast24Hours {
+    dewPointF
+    pressureinHg
+    rainIn
+    tempF
+    timestamp
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class ArchiveForLast24HoursGQL extends Apollo.Query<ArchiveForLast24HoursQuery, ArchiveForLast24HoursQueryVariables> {
+    document = ArchiveForLast24HoursDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const NewArchiveAddedDocument = gql`
+    subscription newArchiveAdded {
+  newArchiveAdded {
+    dewPointF
+    pressureinHg
+    rainIn
+    tempF
+    timestamp
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class NewArchiveAddedGQL extends Apollo.Subscription<NewArchiveAddedSubscription, NewArchiveAddedSubscriptionVariables> {
+    document = NewArchiveAddedDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const HumidityForLast24HoursDocument = gql`
     query humidityForLast24Hours {
   humidityForLast24Hours {

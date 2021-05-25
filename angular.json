@@ -18,13 +18,14 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
-              "core-js",
-              "xlsx",
               "@babel/runtime",
-              "raf",
+              "core-js",
+              "decimal.js",
               "moment-timezone",
-              "zen-observable",
+              "raf",
               "subscriptions-transport-ws",
+              "xlsx",
+              "zen-observable",
               "zone.js/dist/zone-error"
             ],
             "outputPath": "dist/weather-station",

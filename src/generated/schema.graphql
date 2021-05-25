@@ -28,26 +28,6 @@ type Archive {
   windSpeedMphAvg: Float
 }
 
-input ArchiveWhereArgs {
-  dewPointF: OperatorBase
-  feelsF: OperatorBase
-  light: OperatorBase
-  lightSeconds: OperatorBase
-  lightning: OperatorBase
-  pressureinHg: OperatorBase
-  rainIn: OperatorBase
-  relH: OperatorBase
-  tempF: OperatorBase
-  timestamp: OperatorBase
-  totalRainIn: OperatorBase
-  uvIndex: OperatorBase
-  windDeg: OperatorBase
-  windGustDeg: OperatorBase
-  windGustMph: OperatorBase
-  windSpeedMph: OperatorBase
-  windSpeedMphAvg: OperatorBase
-}
-
 type AtlasLightning {
   currentStrikes: Int!
   dailyStrikes: Int!
@@ -197,7 +177,7 @@ type Pressure {
 
 type Query {
   accessStatuses(where: [AccessStatusWhereArgs!]): [AccessStatus!]!
-  archives(where: [ArchiveWhereArgs!]): [Archive!]!
+  archiveForLast24Hours: [Archive!]!
   atlasLightnings(where: [AtlasLightningWhereArgs!]): [AtlasLightning!]!
   atlasStatuses(where: [AtlasStatusWhereArgs!]): [AtlasStatus!]!
   dailyRains(where: [DailyRainWhereArgs!]): [DailyRain!]!

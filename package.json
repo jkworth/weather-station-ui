@@ -38,6 +38,7 @@
     "@ngxs/store": "^3.6.2",
     "apollo-angular": "^2.4.0",
     "bootstrap": "^4.6.0",
+    "decimal.js": "^10.2.1",
     "graphql": "^15.5.0",
     "immer": "^9.0.1",
     "moment-timezone": "^0.5.31",
