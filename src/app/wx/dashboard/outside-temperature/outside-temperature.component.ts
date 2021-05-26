@@ -2,6 +2,7 @@ import * as am4charts from '@amcharts/amcharts4/charts';
 import { ClockHand } from '@amcharts/amcharts4/charts';
 import * as am4core from '@amcharts/amcharts4/core';
 import { Label } from '@amcharts/amcharts4/core';
+import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import { isPlatformBrowser } from '@angular/common';
 import {
   AfterViewInit,
@@ -44,6 +45,9 @@ export class OutsideTemperatureComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this.browserOnly(() => {
+      am4core.useTheme(am4themes_animated);
+      am4core.options.autoDispose = true;
+
       this.setupChart();
       this.setupMainTempLabel();
       this.setupDegreeIndicatorLabel();
