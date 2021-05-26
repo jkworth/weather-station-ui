@@ -2,7 +2,18 @@ import * as am4charts from '@amcharts/amcharts4/charts';
 import { ClockHand } from '@amcharts/amcharts4/charts';
 import * as am4core from '@amcharts/amcharts4/core';
 import { Label } from '@amcharts/amcharts4/core';
-import { AfterViewInit, Component, ElementRef, HostListener, NgZone, OnDestroy, ViewChild } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  Inject,
+  NgZone,
+  OnDestroy,
+  PLATFORM_ID,
+  ViewChild
+} from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Humidity, Temperature } from 'src/generated/graphql';
 import { HumidityFacade } from '../../stores/humidity/humidity.facade';
@@ -25,13 +36,14 @@ export class OutsideTemperatureComponent implements AfterViewInit, OnDestroy {
   private feelsLikeLabel: Label;
 
   constructor(
+    @Inject(PLATFORM_ID) private platformId,
     private zone: NgZone,
     private humidityFacade: HumidityFacade,
     private temperaturesFacade: TemperatureFacade
   ) {}
 
   ngAfterViewInit(): void {
-    this.zone.runOutsideAngular(() => {
+    this.browserOnly(() => {
       this.setupChart();
       this.setupMainTempLabel();
       this.setupDegreeIndicatorLabel();
@@ -45,19 +57,23 @@ export class OutsideTemperatureComponent implements AfterViewInit, OnDestroy {
       if (!value) {
         return;
       }
-      this.handleTemperatureDataUpdates(value);
+      this.browserOnly(() => {
+        this.handleTemperatureDataUpdates(value);
+      });
     });
 
     this.humidityFacade.values$.pipe(map((temps) => temps.slice(-1)[0])).subscribe((value: Humidity) => {
       if (!value) {
         return;
       }
-      this.handleHumidityDataUpdates(value);
+      this.browserOnly(() => {
+        this.handleHumidityDataUpdates(value);
+      });
     });
   }
 
   ngOnDestroy(): void {
-    this.zone.runOutsideAngular(() => {
+    this.browserOnly(() => {
       if (this.chart) {
         this.chart.dispose();
       }
@@ -66,21 +82,28 @@ export class OutsideTemperatureComponent implements AfterViewInit, OnDestroy {
 
   @HostListener('window:resize', [])
   onResize(): void {
-    this.chart.deepInvalidate();
+    this.browserOnly(() => {
+      this.chart.deepInvalidate();
+    });
+  }
+
+  // Run the function only in the browser
+  private browserOnly(f: () => void) {
+    if (isPlatformBrowser(this.platformId)) {
+      this.zone.runOutsideAngular(() => {
+        f();
+      });
+    }
   }
 
   private handleTemperatureDataUpdates(temp: Temperature) {
-    this.zone.runOutsideAngular(() => {
-      this.hand.showValue(temp.temp, 1000, am4core.ease.cubicInOut);
-      this.tempLabel.text = Math.round(temp.temp).toString();
-      this.feelsLikeLabel.text = `${Math.round(temp.feelsLike).toString()}`;
-    });
+    this.hand.showValue(temp.temp, 1000, am4core.ease.cubicInOut);
+    this.tempLabel.text = Math.round(temp.temp).toString();
+    this.feelsLikeLabel.text = `${Math.round(temp.feelsLike).toString()}`;
   }
 
   private handleHumidityDataUpdates(temp: Humidity) {
-    this.zone.runOutsideAngular(() => {
-      this.humidityLabel.text = `${Math.round(temp.relative).toString()}%`;
-    });
+    this.humidityLabel.text = `${Math.round(temp.relative).toString()}%`;
   }
 
   private setupTempIndicatorHand() {

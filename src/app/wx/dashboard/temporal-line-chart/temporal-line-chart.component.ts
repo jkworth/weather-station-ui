@@ -2,7 +2,9 @@ import * as am4charts from '@amcharts/amcharts4/charts';
 import { DateAxis, Legend, ValueAxis, XYChart, XYCursor, XYSeries } from '@amcharts/amcharts4/charts';
 import * as am4core from '@amcharts/amcharts4/core';
 import { Color, NumberFormatter } from '@amcharts/amcharts4/core';
-import { AfterViewInit, Component, ElementRef, NgZone, OnDestroy, ViewChild } from '@angular/core';
+import am4themes_animated from '@amcharts/amcharts4/themes/animated';
+import { isPlatformBrowser } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, Inject, NgZone, OnDestroy, PLATFORM_ID, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Archive } from 'src/generated/graphql';
 import { ArchiveFacade } from '../../stores/archive/archive-store.facade';
@@ -21,16 +23,27 @@ export class TemporalLineChartComponent implements AfterViewInit, OnDestroy {
 
   private subscriptions = new Subscription();
 
-  constructor(private zone: NgZone, private archiveFacade: ArchiveFacade) {}
+  constructor(@Inject(PLATFORM_ID) private platformId, private zone: NgZone, private archiveFacade: ArchiveFacade) {}
 
   ngAfterViewInit(): void {
-    this.setupChart();
+    this.browserOnly(() => {
+      am4core.useTheme(am4themes_animated);
+      am4core.options.autoDispose = true;
+
+      this.setupChart();
+    });
+
+    // setInterval(() => {
+    //   if (this.chart.data.length > 0) {
+    //     this.updateData([{ ...this.chart.data[this.chart.data.length - 1], timestamp: new Date() }]);
+    //   }
+    // }, 5000);
 
     this.archiveFacade.values$.subscribe(this.updateData.bind(this));
   }
 
   ngOnDestroy(): void {
-    this.zone.runOutsideAngular(() => {
+    this.browserOnly(() => {
       if (this.chart) {
         this.chart.dispose();
       }
@@ -39,12 +52,21 @@ export class TemporalLineChartComponent implements AfterViewInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
+  // Run the function only in the browser
+  private browserOnly(f: () => void) {
+    if (isPlatformBrowser(this.platformId)) {
+      this.zone.runOutsideAngular(() => {
+        f();
+      });
+    }
+  }
+
   private updateData(archives: Archive[]) {
     if (!Array.isArray(archives)) {
       return;
     }
 
-    this.zone.runOutsideAngular(() => {
+    this.browserOnly(() => {
       let numberOfItemsToRemove = this.chart.data.length;
 
       if (this.chart.data.length > 0) {
@@ -59,19 +81,17 @@ export class TemporalLineChartComponent implements AfterViewInit, OnDestroy {
   }
 
   private setupChart() {
-    this.zone.runOutsideAngular(() => {
-      this.chart = am4core.create(this.displayEleRef.nativeElement, XYChart);
-      this.chart.dateFormatter.dateFormat = 'HH:mm';
-      this.chart.responsive.enabled = true;
+    this.chart = am4core.create(this.displayEleRef.nativeElement, XYChart);
+    this.chart.dateFormatter.dateFormat = 'HH:mm';
+    this.chart.responsive.enabled = true;
 
-      this.createDateAxis();
-      this.createTemperatureAxis();
-      this.createPressureAxis();
-      this.createRainAxis();
+    this.createDateAxis();
+    this.createTemperatureAxis();
+    this.createPressureAxis();
+    this.createRainAxis();
 
-      this.setupCursor();
-      this.setupLegend();
-    });
+    this.setupCursor();
+    this.setupLegend();
   }
 
   private createTemperatureAxis(): void {
