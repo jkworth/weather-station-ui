@@ -8,7 +8,7 @@ import { GetTemperatureForLast24Hours, SubscribeToNewTemperature, TemperatureSta
   providedIn: 'root'
 })
 export class TemperatureFacade {
-  constructor(private store: Store) {}
+  constructor(private store: Store, private temp: TemperatureState) {}
 
   @Select(TemperatureState.records<Temperature>())
   private _values$: Observable<Temperature[]>;

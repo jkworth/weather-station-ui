@@ -2,6 +2,7 @@ import { createSelector, StateContext } from '@ngxs/store';
 import { Query, Subscription } from 'apollo-angular';
 import { produce } from 'immer';
 import { WritableDraft } from 'immer/dist/types/types-external';
+import { Subject } from 'rxjs';
 
 export interface WxBaseStateModel<T> {
   records: T[];
@@ -17,6 +18,12 @@ export class WxBaseState<T> {
   protected retrieved24Hours = false;
   protected subscribedToChanges = false;
 
+  private subscriptionClosed = new Subject<Date>();
+
+  get subscriptionClosed$() {
+    return this.subscriptionClosed.asObservable();
+  }
+
   static records<T>() {
     return createSelector([this], (state: WxBaseStateModel<T>) => {
       return state.records;
@@ -28,28 +35,30 @@ export class WxBaseState<T> {
 
     this.retrieved24Hours = true;
 
-    this.last24HoursGql.fetch().subscribe((response) => {
-      console.log(`24hrs of ${this.pascalCaseTypeName} loaded`);
+    this.last24HoursGql.fetch().subscribe({
+      next: (response) => {
+        console.log(`24hrs of ${this.pascalCaseTypeName} loaded`);
 
-      ctx.setState(
-        produce((draft: WritableDraft<WxBaseStateModel<T>>) => {
-          let records = response.data[`${this.camelCaseTypeName}ForLast24Hours`].map((record) => ({
-            ...record
-          }));
+        ctx.setState(
+          produce((draft: WritableDraft<WxBaseStateModel<T>>) => {
+            let records = response.data[`${this.camelCaseTypeName}ForLast24Hours`].map((record) => ({
+              ...record
+            }));
 
-          records.forEach((record) => {
-            if (record.hasOwnProperty('timestamp')) {
-              record['timestamp'] = new Date(Date.parse(record['timestamp']));
+            records.forEach((record) => {
+              if (record.hasOwnProperty('timestamp')) {
+                record['timestamp'] = new Date(Date.parse(record['timestamp']));
+              }
+            });
+
+            if (preProcessor) {
+              records = preProcessor(records);
             }
-          });
 
-          if (preProcessor) {
-            records = preProcessor(records);
-          }
-
-          draft.records = records;
-        })
-      );
+            draft.records = records;
+          })
+        );
+      }
     });
   }
 
@@ -61,27 +70,29 @@ export class WxBaseState<T> {
 
     this.subscribedToChanges = true;
 
-    this.newRecordAddedGql.subscribe().subscribe((response) => {
-      console.log(`new ${this.pascalCaseTypeName} added`);
-      ctx.setState(
-        produce((draft: WritableDraft<WxBaseStateModel<T>>) => {
-          draft.records.shift();
+    this.newRecordAddedGql.subscribe().subscribe({
+      next: (response) => {
+        console.log(`new ${this.pascalCaseTypeName} added`);
+        ctx.setState(
+          produce((draft: WritableDraft<WxBaseStateModel<T>>) => {
+            draft.records.shift();
 
-          let records = [response.data[`new${this.pascalCaseTypeName}Added`]];
-          records.forEach((record) => {
-            if (record.hasOwnProperty('timestamp')) {
-              record['timestamp'] = new Date(Date.parse(record['timestamp']));
+            let records = [response.data[`new${this.pascalCaseTypeName}Added`]];
+            records.forEach((record) => {
+              if (record.hasOwnProperty('timestamp')) {
+                record['timestamp'] = new Date(Date.parse(record['timestamp']));
+              }
+            });
+            records = [...draft.records, ...records];
+
+            const newIndex = records.length - 1;
+            if (preProcessor) {
+              records[newIndex] = preProcessor(records[newIndex], newIndex, records);
             }
-          });
-          records = [...draft.records, ...records];
-
-          const newIndex = records.length - 1;
-          if (preProcessor) {
-            records[newIndex] = preProcessor(records[newIndex], newIndex, records);
-          }
-          draft.records = records;
-        })
-      );
+            draft.records = records;
+          })
+        );
+      }
     });
   }
 

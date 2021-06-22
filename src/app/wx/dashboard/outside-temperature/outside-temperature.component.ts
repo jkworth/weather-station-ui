@@ -180,7 +180,7 @@ export class OutsideTemperatureComponent implements AfterViewInit, OnDestroy {
     this.chart.startAngle = -220;
     this.chart.endAngle = 40;
 
-    this.chart.padding(0, -20, 20, -5);
+    this.chart.padding(-40, -20, 20, -5);
     this.chart.innerRadius = -15;
 
     this.axis = this.chart.xAxes.push(new am4charts.ValueAxis<am4charts.AxisRendererCircular>());
@@ -197,7 +197,7 @@ export class OutsideTemperatureComponent implements AfterViewInit, OnDestroy {
     this.humidityLabel.fontSize = '4vw';
     this.humidityLabel.align = 'center';
     this.humidityLabel.x = am4core.percent(35);
-    this.humidityLabel.y = am4core.percent(100);
+    this.humidityLabel.y = am4core.percent(99);
     this.humidityLabel.horizontalCenter = 'middle';
     this.humidityLabel.verticalCenter = 'middle';
     this.humidityLabel.fill = am4core.color('#1eaaf1');
@@ -208,7 +208,7 @@ export class OutsideTemperatureComponent implements AfterViewInit, OnDestroy {
     valueTypeLabel.fontSize = '2vw';
     valueTypeLabel.align = 'center';
     valueTypeLabel.x = am4core.percent(35);
-    valueTypeLabel.y = am4core.percent(90);
+    valueTypeLabel.y = am4core.percent(89);
     valueTypeLabel.horizontalCenter = 'middle';
     valueTypeLabel.verticalCenter = 'middle';
     valueTypeLabel.fill = am4core.color('#1eaaf1');
@@ -221,7 +221,7 @@ export class OutsideTemperatureComponent implements AfterViewInit, OnDestroy {
     this.feelsLikeLabel.fontSize = '4vw';
     this.feelsLikeLabel.align = 'center';
     this.feelsLikeLabel.x = am4core.percent(63);
-    this.feelsLikeLabel.y = am4core.percent(100);
+    this.feelsLikeLabel.y = am4core.percent(99);
     this.feelsLikeLabel.horizontalCenter = 'middle';
     this.feelsLikeLabel.verticalCenter = 'middle';
     this.feelsLikeLabel.fill = am4core.color('#fb572f');
@@ -232,7 +232,7 @@ export class OutsideTemperatureComponent implements AfterViewInit, OnDestroy {
     valueTypeLabel.fontSize = '2vw';
     valueTypeLabel.align = 'center';
     valueTypeLabel.x = am4core.percent(63);
-    valueTypeLabel.y = am4core.percent(90);
+    valueTypeLabel.y = am4core.percent(89);
     valueTypeLabel.horizontalCenter = 'middle';
     valueTypeLabel.verticalCenter = 'middle';
     valueTypeLabel.fill = am4core.color('#fb572f');
