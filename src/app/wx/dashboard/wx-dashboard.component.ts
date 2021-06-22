@@ -26,7 +26,6 @@ export class WxDashboardComponent implements OnInit {
     });
 
     setInterval(() => {
-      console.log(moment.duration(moment().diff(this.lastUpdateTime)).asMinutes());
       // if we have not gotten data in over 10 mins then reload the page
       if (moment.duration(moment().diff(this.lastUpdateTime)).asMinutes() > 10) {
         window.location.reload();
