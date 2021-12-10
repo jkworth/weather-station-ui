@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  API_HOST: 'innerharbor.duckdns.org',
+  API_HOST: 'innerharbor.myds.me',
   API_PORT: 3443
 };
 
